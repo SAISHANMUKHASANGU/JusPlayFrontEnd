@@ -1,0 +1,188 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+/* .header{
+    display: flex;
+    justify-content: center;
+    background-color: #1DB223;
+    text-align: center;
+    align-items: center;
+    color: whitesmoke;
+    height: 75px;
+    position: sticky;
+    top:0;
+    
+} */
+
+
+#canteen{
+  background-color: #FFE523;
+  border-radius: none;
+}
+
+#navele{
+  padding-left: 10px;
+  padding-right: 10px;
+  color:blue;
+  text-decoration: none;
+}
+
+#navele:hover{
+  color: red;
+}
+
+.basimg{
+  height: 100%;
+  width: 100%;
+  padding: 0%;
+  margin: 0px;
+}
+
+.footer{
+  text-align: center;
+  align-content: center;
+  height: 100px;
+  background-color: #FFE523;
+}
+
+#indiadiv{
+  height: 500px;
+  width: 50%;
+  padding: 0%;
+  margin: 0px;
+  background-color:yellow;
+}
+
+.india{
+  height: 100%;
+
+}
+
+.sidebyside{
+  display: flex;
+  width: 100%;
+  
+  
+}
+
+.quotearea{
+  background-color: #1DB223;
+  width: 50%;
+  height: 500px;
+
+  text-align: center;
+  align-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 45px;
+  color: #ddd;
+
+}
+
+.quotetxt{
+  color: white;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-align: center;
+  font-size: 50px;
+  
+}
+
+.botmright {
+  position: relative;
+  bottom: 120px;
+  right: -345px;
+  color: white;
+  font-size: 100px;
+}
+
+#searchingform {
+  width: 100%;
+  
+  margin-bottom: 20px;
+  align-content: center;
+}
+
+#category,
+#states,.submit,#date {  
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.submit:hover {
+  background-color: #45a049;
+  cursor: pointer;
+}
+
+.sidebyside{
+  display: flex;
+  align-items:center;
+  text-align: center;
+}
+
+.quotealignment{
+  background-color: #1DB223;
+  text-align: center;
+}
+
+#searchingform{
+  
+  display: flex;
+  align-content: center;
+  justify-content: center;
+ 
+  
+}
+
+.Enquiryform{
+  text-align: center;
+  padding: 15px;
+}
+
+.products{
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.prod{
+  display: flex;
+  height:350px;
+  border: 3px solid black;
+  margin: 30px;
+  padding: 5px;
+  flex-direction: column;
+  width: 200px;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.prod:hover{
+  box-shadow: 5px 5px gray;
+}
+
+.prodimg{
+  height: 150px;
+  width: 200px;
+  
+}
+
+.prodbuttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buyrent{
+  text-align: center;
+  padding: 5px;
+}
+
+.buyrent:hover{
+  cursor: pointer;
+}

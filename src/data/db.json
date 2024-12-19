@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": "7dd0",
+      "email": "sangusaishanmukha@gmail.com",
+      "name": "shanu",
+      "favorite_game": "cricket",
+      "password": "2003"
+    },
+    {
+      "id": "6966",
+      "email": "vinu@gmail.com",
+      "name": "vinu",
+      "favorite_game": "batting",
+      "password": "2003"
+    },
+    {
+      "id": "6c88",
+      "name": "vineeth",
+      "email": "pranu@gmail.com",
+      "favorite_game": "cricket",
+      "password": "2003"
+    },
+    {
+      "id": "7150",
+      "email": "viv@gmail.com",
+      "name": "",
+      "favorite_game": "",
+      "password": ""
+    },
+    {
+      "id": "0ba7",
+      "email": "",
+      "name": "",
+      "favorite_game": "",
+      "password": ""
+    },
+    {
+      "id": "7eb7",
+      "email": "sangusaishanmukha@gmail.com",
+      "name": "shanu",
+      "favorite_game": "football",
+      "password": "123"
+    }
+  ]
+}
