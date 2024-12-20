@@ -165,7 +165,7 @@ const OwnerSignIn = () => {
             
           />
         </FormGroup>
-        <p>Not a Previous user?<a href="/signup">Signup</a></p>
+        <p>Not a Previous user?<a href="/owner">Signup</a></p>
 
         {error && <Error>{error}</Error>}
         {success && <Success>{success}</Success>}

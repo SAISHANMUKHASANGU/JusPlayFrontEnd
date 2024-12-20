@@ -81,10 +81,12 @@ const Button = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width:80px;
 
   &:hover {
     background-color: #218838;
   }
+  
 `;
 
 const ErrorMessage = styled.span`
@@ -98,6 +100,7 @@ function Form() {
     username: null,
     favorite_game: null,
     password: null,
+    confirmPassword: null,
   });
 
   const [visibility, setVisibility] = useState(false);
@@ -109,6 +112,7 @@ function Form() {
     password: "",
     bookings: [],
   });
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -162,6 +166,16 @@ function Form() {
       return;
     }
 
+    if (confirmPassword === "") {
+      setError({ confirmPassword: "Confirm Password can't be Empty" });
+      return;
+    }
+
+    if (newuser.password !== confirmPassword) {
+      setError({ confirmPassword: "Passwords do not match" });
+      return;
+    }
+
     if (newuser.name === "") {
       setError({ username: "Username can't be Empty" });
       return;
@@ -192,6 +206,7 @@ function Form() {
         password: "",
         bookings: [],
       });
+      setConfirmPassword("");
     } catch (error) {
       console.log("Error adding User", error);
     }
@@ -237,6 +252,20 @@ function Form() {
             </Button>
           </InputGroup>
           {error.password && <ErrorMessage>{error.password}</ErrorMessage>}
+
+          <InputGroup>
+            <Label htmlFor="confirmPassword">Confirm Password:</Label>
+            <Input
+              type={visibility ? "text" : "password"}
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+            />
+          </InputGroup>
+          {error.confirmPassword && (
+            <ErrorMessage>{error.confirmPassword}</ErrorMessage>
+          )}
         </Fieldset>
         <Fieldset>
           <Legend>Personal Info</Legend>

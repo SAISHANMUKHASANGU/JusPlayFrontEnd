@@ -302,10 +302,12 @@ const Dashboard =() => {
     navigate("/bookings",{state:selected})
 
   }
+  
 
   
 
   return (
+    <Div>
     <DashboardWrapper>
       <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
@@ -446,6 +448,7 @@ const Dashboard =() => {
       </StyledForm>
       </FormWrapper>:""}
     </DashboardWrapper>
+    </Div>
   );
 }
 
@@ -461,7 +464,7 @@ const DashboardWrapper = styled.div`
   flex-direction:column;
   gap:10px;
   min-height:100vh;
-  
+  border
   
   
   
@@ -765,3 +768,9 @@ const StyledButton = styled.button`
     outline: 2px solid #80bdff;
   }
 `;
+
+const Div=styled.div`
+  background-image: url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
+  background-size: cover;
+  background-repeat: no-repeat;
+`

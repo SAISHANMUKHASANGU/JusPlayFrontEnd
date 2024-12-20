@@ -56,19 +56,19 @@ const OwnerDashboard =() => {
     
     
 
-  const getuserdata=async()=>{
-    const required_data=(await axios.get(API_URL)).data
-    console.log(required_data)
-    let User=required_data.find((user)=>user.email===useremail)
-    console.log(User.turfs)
+  // const getuserdata=async()=>{
+  //   const required_data=(await axios.get(API_URL)).data
+  //   console.log(required_data)
+  //   let User=required_data.find((user)=>user.email===useremail)
+  //   console.log(User.turfs)
     
     
     
-  }
+  // }
 
-  useEffect(()=>{
-      getuserdata()
-    },[])
+  // useEffect(()=>{
+  //     getuserdata()
+  //   },[])
 
     
   
@@ -82,7 +82,9 @@ const OwnerDashboard =() => {
   const [filteredturfs,setFilteredTurfs]=useState([]);
   const [registerturf,setRegisterTurf]=useState(false)
   const [turfs,setTurfs]=useState(User.turfs)
+  const [id,setID]=useState()
   const [newTurf,setNewturf]=useState({
+    
     name: "",
       image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
       type: "",
@@ -290,7 +292,10 @@ const OwnerDashboard =() => {
           return
       }
       else{
-        console.log(newTurf)
+        
+        await setID(()=>response.length+1)
+        console.log('hello')
+        console.log(id)
         addTurf()
         alert("New turf is added")
         setError({name:null,type:null,price:null,location:null})
@@ -299,6 +304,8 @@ const OwnerDashboard =() => {
 
       const addTurf=async()=>{
           await axios.post("https://jusplayserver-2.onrender.com/availableTurfs",newTurf)
+          let turfslength=(await axios.get("https://jusplayserver-2.onrender.com/availableTurfs")).data.length
+          console.log(turfslength)
           let response=await axios.get(API_URL)
           let data=response.data
           let selectedowner=data.find((data)=>data.email===User.email)
@@ -356,25 +363,25 @@ const OwnerDashboard =() => {
     setTurfs(selected.turfs)
     let turfs=await axios.get(TURFS_URL)
     let turfsdata=turfs.data
-    console.log(turfsdata)
-    turfsdata=turfsdata.filter((tur)=>tur.name!==turf.name || tur.location!==turf.location || tur.price!==turf.price || tur.type!==turf.type)
-    console.log(turfsdata)
-    await axios.put(TURFS_URL,turfsdata)
+    let selectedturf=turfsdata.find((tur)=>tur.name===turf.name &&tur.type===turf.type && tur.price===turf.price && tur.location===turf.location )
+    await axios.delete(`${TURFS_URL}/${selectedturf.id}`)
+    
   }
 
 
   
 
   return (
+    <Div>
     <DashboardWrapper>
         
-        {turfs.length===0?<h1>No Turfs Registered on your name</h1>:(turfs.map((turf)=>(<div>
-            <p>Turf Name:{turf.name}</p>
-            <p>Turf Location:{turf.location}</p>
-            <p>Price for Session:{turf.price}</p>
-            <p>Sport:{turf.type}</p>
-            <button onClick={()=>remove(turf)}>Remove</button>
-        </div>)))}
+        {turfs.length===0?<h1>No Turfs Registered on your name</h1>:(turfs.map((turf)=>(<TurfCard>
+  <TurfDetail>Turf Name: {turf.name}</TurfDetail>
+  <TurfDetail>Turf Location: {turf.location}</TurfDetail>
+  <TurfDetail>Price for Session: {turf.price}</TurfDetail>
+  <TurfDetail>Sport: {turf.type}</TurfDetail>
+  <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
+</TurfCard>)))}
       {/* <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
         
@@ -515,6 +522,7 @@ const OwnerDashboard =() => {
       </StyledForm>
       </FormWrapper>:""}
     </DashboardWrapper>
+    </Div>
   );
 }
 
@@ -614,6 +622,8 @@ const TurfCard = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  display:flex;
+  flex-diection:
 
   &:hover {
     transform: scale(1.03);
@@ -646,6 +656,7 @@ const TurfCard = styled.div`
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    width:100px;  
     transition: background-color 0.3s;
   }
 
@@ -808,3 +819,34 @@ export const BookingsButton = styled.button`
     box-shadow: 0 4px 8px rgba(253, 216, 53, 0.5);
   }
 `;
+
+
+const TurfDetail = styled.p`
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+`;
+
+const RemoveButton = styled.button`
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background-color 0.2s, transform 0.2s;
+  
+
+  
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const Div=styled.div`
+  background-image: url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
+  background-size: cover;
+  background-repeat: no-repeat;
+`
