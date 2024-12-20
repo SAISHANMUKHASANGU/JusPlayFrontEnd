@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import MainLayout from "../layout/MainLayout"
 import Products from "../pages/Products"
 
-import SignIn from "../pages/login"
+import SignIn from "../pages/Login"
 import Dashboard from "../pages/DashBoard"
 import User from "../pages/user"
 import Userlayout from "../layout/Userlayout"
