@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { FaSave } from 'react-icons/fa';
 import { Navigate, NavLink, UNSAFE_createClientRoutesWithHMRRevalidationOptOut, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import turf1 from "./images/turf1.jpg"
@@ -122,6 +123,7 @@ const OwnerDashboard =() => {
       usermail:User.email,
       
   })
+  const [newprice,setNewPrice]=useState(null)
   // console.log("turfs");
   // console.log(turfs)
   
@@ -399,6 +401,25 @@ const OwnerDashboard =() => {
     }
   }
 
+  const Save=(turf)=>{
+    console.log(turf)
+    setEdit(false)
+    let final={
+      id:turf.id,
+      image:turf.image,
+      location:turf.location,
+      name:turf.name,
+      price:turf.price,
+      rating:turf.rating,
+      type:turf.type,
+      usermail:turf.usermail
+    }
+
+  }
+
+const handlechange=(e)=>{
+  setEdit(e.target.value)
+}
 
   
 
@@ -411,9 +432,9 @@ const OwnerDashboard =() => {
         (turfs.map((turf)=>(<TurfCard>
   <TurfDetail>Turf Name: <input type="text" value={turf.name} disabled="true"/></TurfDetail>
   <TurfDetail>Turf Location: <input type="text" value={turf.location} disabled="true"/> </TurfDetail>
-  <TurfDetail>Price for Session: <input type="text" value={turf.price}disabled={!edit}/></TurfDetail>
-  <TurfDetail>Sport: <input type="text" value={turf.type} disabled="true"/></TurfDetail>
-  {edit?<Button>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>}
+  <TurfDetail>Price for Session: <input type="number" value={turf.price} disabled={!edit} onChange={handlechange}/></TurfDetail>
+  <TurfDetail>Sport: <input type="text" value={turf.type} disabled="true" /></TurfDetail>
+  {edit?<Button onClick={()=>Save(turf)}>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>}
   
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
 </TurfCard>)))}
