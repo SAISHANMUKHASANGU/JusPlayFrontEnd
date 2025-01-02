@@ -123,7 +123,7 @@ const OwnerDashboard =() => {
       usermail:User.email,
       
   })
-  const [newprice,setNewPrice]=useState(null)
+  const [newprice,setNewPrice]=useState("")
   // console.log("turfs");
   // console.log(turfs)
   
@@ -418,6 +418,7 @@ const OwnerDashboard =() => {
   }
 
 const handlechange=(e)=>{
+  console.log(e.target.value)
   setEdit(e.target.value)
 }
 
@@ -434,7 +435,7 @@ const handlechange=(e)=>{
   <TurfDetail>Turf Location: <input type="text" value={turf.location} disabled="true"/> </TurfDetail>
   <TurfDetail>Price for Session: <input type="number" value={turf.price} disabled={!edit} onChange={handlechange}/></TurfDetail>
   <TurfDetail>Sport: <input type="text" value={turf.type} disabled="true" /></TurfDetail>
-  {edit?<Button onClick={()=>Save(turf)}>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>}
+  {/* {edit?<Button onClick={()=>Save(turf)}>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>} */}
   
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
 </TurfCard>)))}
