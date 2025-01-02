@@ -5,11 +5,11 @@ import UserHeader from '../components/Dashboardheader'
 import Dashboard from '../pages/DashBoard'
 
 function MainLayout({children}) {
-  const islogin=localStorage.getItem("login")
-  console.log(islogin)
+  // const islogin=localStorage.getItem("login")
+  // console.log(islogin)
   return (
     <>
-       {islogin?<UserHeader/>:<Header/>} 
+       <Header/> 
         {children}
         <Footer/>
     </>

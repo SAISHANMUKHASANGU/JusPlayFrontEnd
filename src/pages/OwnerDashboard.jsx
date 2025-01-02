@@ -12,11 +12,13 @@ let useremail;
 let username;
 let Profile;
 let email;
+let ownerturfs;
 
 
 
 const OwnerDashboard =() => {
     const [selected,setSelected]=useState("")
+    const [edit,setEdit]=useState(false)
 
     // useEffect(async()=>{
     //     let response=await axios.get(API_URL)
@@ -34,8 +36,8 @@ const OwnerDashboard =() => {
         let selected=data.find((dat)=>dat.email===User.email)
         
         setSelected(selected)
-        console.log("selected")
-        console.log(selected)
+        // console.log("selected")
+        // console.log(selected)
     }
     
   
@@ -44,8 +46,8 @@ const OwnerDashboard =() => {
     const {state}=location;
     User=state.User;
     email=state.User.email
-    console.log("User")
-    console.log(User)
+    // console.log("User")
+    // console.log(User)
 
     
 
@@ -69,106 +71,6 @@ const OwnerDashboard =() => {
   // useEffect(()=>{
   //     getuserdata()
   //   },[])
-
-    
-  
-  const [UserID,setUserID]=useState(User.id);
-  const [Username,setUsername]=useState(null);
-  const [nextBooking, setNextBooking] = useState(null);
-  const [recentActivity, setRecentActivity] = useState([]);
-  const [availableTurfs, setAvailableTurfs] = useState();
-  const [filters, setFilters] = useState({ location: '',  type: 'Cricket'});
-  const [promotions, setPromotions] = useState([]);
-  const [filteredturfs,setFilteredTurfs]=useState([]);
-  const [registerturf,setRegisterTurf]=useState(false)
-  const [turfs,setTurfs]=useState(User.turfs)
-  const [id,setID]=useState()
-  const [newTurf,setNewturf]=useState({
-    
-    name: "",
-      image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
-      type: "",
-      price: "",
-      location: "",
-      rating:Math.floor(Math.random() * 5) + 1,
-      user:User.email,
-      bookings:[]
-  })
-
-  // useEffect(()=>getdata(),[])
-  useEffect(() => {
-    getdata()
-    // Simulating data fetching
-    setNextBooking({
-      turfName: 'Seaside Turf',
-      date: '2024-12-15',
-      time: '5:00 PM',
-    });
-
-    
-
-
-    // useLocation()
-  
-
-    setRecentActivity([
-      { id: 1, turfName: 'City Sports Arena', status: 'Completed' },
-      { id: 2, turfName: 'Greenfield Ground', status: 'Cancelled' },
-    ]);
-
-    
-
-    setPromotions([
-      { code: 'WELCOME10', discount: '10% off on first booking' },
-      { code: 'FESTIVE20', discount: '20% off during festive season' },
-    ]);
-
-    apifetch()
-  }, []);
-
-
-  
-
-  const apifetch=async ()=>
-  {
-    try {
-      const response = await axios.get(API_URL);
-      const users = response.data;
-      console.log(users)
-
-      const user = users.find(
-        (user) => user.email ===useremail 
-      );
-      
-
-      console.log(user)
-      User=user
-      username=user.name
-      setUsername(user.name)
-      console.log(Username)
-      console.log(username)
-      console.log(User)
-
-
-      
-
-      
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      
-    }
-  }
-
-
-
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
-  };
-
- 
-
   const getdata=async ()=>{
     // let data=JSON.parse(localStorage.getItem('logins'))
     // console.log(data)
@@ -183,9 +85,108 @@ const OwnerDashboard =() => {
     // const present=response.data.find((user)=>user.email===data.email)
     // console.log(present.email)
     // useremail=present.email
-    console.log("dnskldnkl")
+    const response=await axios.get("http://localhost:5236/api/Turfs")
+    const data=response.data
+    // console.log(response.data)
+    const filtered=data.filter((element)=>element.usermail===User.email)
+    // console.log(filtered)
+    ownerturfs=filtered;
+    // console.log(ownerturfs)
+    setTurfs(filtered)
+    // console.log("dnskldnkl")
     
   }
+  // getdata()
+
+    
+  
+  const [UserID,setUserID]=useState(User.id);
+  const [Username,setUsername]=useState(null);
+  const [nextBooking, setNextBooking] = useState(null);
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [availableTurfs, setAvailableTurfs] = useState();
+  const [filters, setFilters] = useState({ location: '',  type: 'Cricket'});
+  const [promotions, setPromotions] = useState([]);
+  const [filteredturfs,setFilteredTurfs]=useState([]);
+  const [registerturf,setRegisterTurf]=useState(false)
+  const [turfs,setTurfs]=useState(null)
+  const [id,setID]=useState()
+  const [newTurf,setNewturf]=useState({
+    
+    name: "",
+      image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
+      type: "",
+      price: null,
+      location: "",
+      rating:parseInt(Math.floor(Math.random() * 5) + 1),
+      usermail:User.email,
+      
+  })
+  // console.log("turfs");
+  // console.log(turfs)
+  
+
+  // useEffect(()=>getdata(),[])
+  useEffect(() => {
+    getdata()
+    // Simulating data fetching
+    
+
+    
+
+
+    // useLocation()
+  
+
+    
+
+    
+  },[turfs]);
+
+
+  
+
+  // const apifetch=async ()=>
+  // {
+  //   try {
+  //     const response = await axios.get("http://localhost:5236/api/Owners");
+  //     const users = response.data;
+  //     console.log(users)
+
+  //     const user = users.find(
+  //       (user) => user.email ===useremail 
+  //     );
+      
+
+  //     // console.log(user)
+  //     // User=user
+  //     // username=user.name
+  //     // setUsername(user.name)
+  //     // console.log(Username)
+  //     // console.log(username)
+  //     // console.log(User)
+
+
+      
+
+      
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+      
+  //   }
+  // }
+
+
+
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
+
+ 
+
+  
 
   // const logout=async ()=>{
   //   let data=JSON.parse(localStorage.getItem('logins'))
@@ -202,7 +203,7 @@ const OwnerDashboard =() => {
   const goto=async()=>{
     let response=await axios.get("https://jusplayserver-2.onrender.com/users")
     let data=response.data
-    console.log(data)
+    // console.log(data)
     
     let selected=data.find((user)=>user.email===User.email)
     console.log(selected)
@@ -240,8 +241,11 @@ const OwnerDashboard =() => {
   })
 
   const validation=async()=>{
-      let response=(await axios.get(TURFS_URL)).data
-      let filtered=response.filter((turf)=>turf.name===newTurf.name)
+      let response=await axios.get("http://localhost:5236/api/Turfs")
+      
+      let resdata=response.data
+      console.log(resdata)
+      let filtered=resdata.filter((turf)=>turf.name===newTurf.name)
       if(filtered.length>0)
       {
         let errormessage="Turf already exists"
@@ -293,9 +297,9 @@ const OwnerDashboard =() => {
       }
       else{
         
-        await setID(()=>response.length+1)
+        
         console.log('hello')
-        console.log(id)
+        
         addTurf()
         alert("New turf is added")
         setError({name:null,type:null,price:null,location:null})
@@ -303,20 +307,28 @@ const OwnerDashboard =() => {
       }
 
       const addTurf=async()=>{
-          await axios.post("https://jusplayserver-2.onrender.com/availableTurfs",newTurf)
-          let turfslength=(await axios.get("https://jusplayserver-2.onrender.com/availableTurfs")).data.length
-          console.log(turfslength)
-          let response=await axios.get(API_URL)
-          let data=response.data
-          let selectedowner=data.find((data)=>data.email===User.email)
-          selectedowner.turfs.push(newTurf)
-          let id=selectedowner.id
-          await axios.put(`${API_URL}/${id}`,selectedowner)
-          console.log(selectedowner.turfs)
-          setTurfs(selectedowner.turfs)
+          await axios.post("http://localhost:5236/api/Turfs/AddTurf",newTurf)
+          // let turfslength=(await axios.get("https://jusplayserver-2.onrender.com/availableTurfs")).data.length
+          // console.log(turfslength)
+          // let response=await axios.get(API_URL)
+          // let data=response.data
+          // let selectedowner=data.find((data)=>data.email===User.email)
+          // selectedowner.turfs.push(newTurf)
+          // let id=selectedowner.id
+          // await axios.put(`${API_URL}/${id}`,selectedowner)
+          // console.log(selectedowner.turfs)
+          // setTurfs(selectedowner.turfs)
+          let response=await axios.get("http://localhost:5236/api/Turfs")
+          const data=response.data
+    // console.log(response.data)
+          const filtered=data.filter((element)=>element.usermail===User.email)
+    // console.log(filtered)
+          ownerturfs=filtered;
+    // console.log(ownerturfs)
+          setTurfs(filtered)
         
 
-          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:Math.floor(Math.random() * 5) + 1,user:User.id,bookings:[]})
+          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:parseInt(Math.floor(Math.random() * 5)) + 1,user:User.email})
       }
 
 
@@ -353,19 +365,38 @@ const OwnerDashboard =() => {
 
   }
   const remove=async(turf)=>{
-    let response=await axios.get(API_URL)
-    let data=response.data
-    let selected=data.find((user)=>user.email===email)
-    console.log(selected.turfs)
-    selected.turfs=selected.turfs.filter((tur)=>tur.name!==turf.name || tur.location!==turf.location || tur.price!==turf.price || tur.type!==turf.type)
-    console.log(selected.turfs)
-    await axios.put(`${API_URL}/${selected.id}`,selected)
-    setTurfs(selected.turfs)
-    let turfs=await axios.get(TURFS_URL)
-    let turfsdata=turfs.data
-    let selectedturf=turfsdata.find((tur)=>tur.name===turf.name &&tur.type===turf.type && tur.price===turf.price && tur.location===turf.location )
-    await axios.delete(`${TURFS_URL}/${selectedturf.id}`)
+    // let response=await axios.get(API_URL)
+    // let data=response.data
+    // let selected=data.find((user)=>user.email===email)
+    // console.log(selected.turfs)
+    // selected.turfs=selected.turfs.filter((tur)=>tur.name!==turf.name || tur.location!==turf.location || tur.price!==turf.price || tur.type!==turf.type)
+    // console.log(selected.turfs)
+    // await axios.put(`${API_URL}/${selected.id}`,selected)
+    // setTurfs(selected.turfs)
+    // let turfs=await axios.get(TURFS_URL)
+    // let turfsdata=turfs.data
+    // let selectedturf=turfsdata.find((tur)=>tur.name===turf.name &&tur.type===turf.type && tur.price===turf.price && tur.location===turf.location )
+    await axios.delete(`http://localhost:5236/api/Turfs/DeleteTurf/${turf.id}`)
+    let response=await axios.get("http://localhost:5236/api/Turfs")
+          const data=response.data
+    // console.log(response.data)
+          const filtered=data.filter((element)=>element.usermail===User.email)
+    // console.log(filtered)
+          ownerturfs=filtered;
+    // console.log(ownerturfs)
+          setTurfs(filtered)
+
     
+  }
+
+  const Edit=()=>{
+    if(edit===true)
+    {
+      setEdit(false)
+    }
+    else{
+      setEdit(true)
+    }
   }
 
 
@@ -374,12 +405,16 @@ const OwnerDashboard =() => {
   return (
     <Div>
     <DashboardWrapper>
+      <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
         
-        {turfs.length===0?<h1>No Turfs Registered on your name</h1>:(turfs.map((turf)=>(<TurfCard>
-  <TurfDetail>Turf Name: {turf.name}</TurfDetail>
-  <TurfDetail>Turf Location: {turf.location}</TurfDetail>
-  <TurfDetail>Price for Session: {turf.price}</TurfDetail>
-  <TurfDetail>Sport: {turf.type}</TurfDetail>
+        {turfs&&
+        (turfs.map((turf)=>(<TurfCard>
+  <TurfDetail>Turf Name: <input type="text" value={turf.name} disabled="true"/></TurfDetail>
+  <TurfDetail>Turf Location: <input type="text" value={turf.location} disabled="true"/> </TurfDetail>
+  <TurfDetail>Price for Session: <input type="text" value={turf.price}disabled={!edit}/></TurfDetail>
+  <TurfDetail>Sport: <input type="text" value={turf.type} disabled="true"/></TurfDetail>
+  {edit?<Button>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>}
+  
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
 </TurfCard>)))}
       {/* <TopPanel>
@@ -623,7 +658,7 @@ const TurfCard = styled.div`
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   display:flex;
-  flex-diection:
+  flex-direction:column;
 
   &:hover {
     transform: scale(1.03);

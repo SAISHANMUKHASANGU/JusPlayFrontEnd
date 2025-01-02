@@ -56,9 +56,8 @@ const Fieldset=styled.fieldset`
 function Owner() {
 
     const[error,setError]=useState({
-      email:null,
+      email:"",
       username:null,
-      favorite_game:null,
       password:null
     })
     const [visibility,setVisibility]=useState(false)
@@ -67,7 +66,7 @@ function Owner() {
         email:"",
         name:"",
         password:"",
-        turfs:[]
+        
     })
 
     const [editUser, setEditUser] = useState(null);
@@ -78,7 +77,7 @@ function Owner() {
 
     const fetchdata = async () => {
         try {
-          const response = await axios.get(API_URL);
+          const response = await axios.get("http://localhost:5236/api/Owners");
           setUsers(response.data);
           console.log(response.data)
         } catch (error) {
@@ -198,9 +197,9 @@ function Owner() {
 
         try{
             
-            const response=await axios.post(API_URL,newuser)
+            const response=await axios.post("http://localhost:5236/api/Owners/AddOwner",newuser)
             setUsers([...users,response.data])
-            setNewUser({name:"",email:"",favorite_game:"",password:"",bookings:[]})
+            setNewUser({name:"",email:"",password:""})
 
             
         }

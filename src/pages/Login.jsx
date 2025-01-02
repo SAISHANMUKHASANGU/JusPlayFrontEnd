@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-let API_URL = "https://jusplayserver-2.onrender.com/users";
+let API_URL = "http://localhost:5236/api/JusPlay";
 
 
 const Div=styled.div`
@@ -105,7 +105,8 @@ const SignIn = () => {
     
 
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:5236/api/JusPlay");
+      console.log(response)
       const users = response.data;
 
       const user = users.find(
@@ -113,12 +114,9 @@ const SignIn = () => {
       );
 
       if (user) {
-        const updatedUser = {
-          ...user,
-          lastLogin: new Date().toISOString() // Store the last login time
-        };
+        
 
-        await axios.put(`${API_URL}/${user.id}`, updatedUser);
+        // await axios.put(`${API_URL}/${user.id}`, updatedUser);
 
         setSuccess('Login successful!');
         setError('');

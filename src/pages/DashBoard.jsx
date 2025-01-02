@@ -30,7 +30,7 @@ const Dashboard =() => {
     
 
   const getuserdata=async()=>{
-    const required_data=(await axios.get(API_URL)).data
+    const required_data=(await axios.get("http://localhost:5236/api/JusPlay")).data
     console.log(required_data)
     let User=required_data.find((user)=>user.email===useremail)
     console.log(User)
@@ -60,7 +60,6 @@ const Dashboard =() => {
       location: "",
       rating:Math.floor(Math.random() * 5) + 1,
       user:User.email,
-      bookings:[]
   })
   // useEffect(()=>getdata(),[])
   useEffect(() => {
@@ -97,7 +96,7 @@ const Dashboard =() => {
   const apifetch=async ()=>
   {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:5236/api/JusPlay");
       const users = response.data;
       console.log(users)
 
@@ -165,7 +164,7 @@ const Dashboard =() => {
   const navigate=useNavigate()
 
   const goto=async()=>{
-    let response=await axios.get("https://jusplayserver-2.onrender.com/users")
+    let response=await axios.get("http://localhost:5236/api/JusPlay")
     let data=response.data
     console.log(data)
     
@@ -180,7 +179,7 @@ const Dashboard =() => {
 
   const Filter=async()=>{
     console.log("hello")
-    let avaiTurfs=await axios.get(TURFS_URL)
+    let avaiTurfs=await axios.get("http://localhost:5236/api/Turfs")
     console.log(avaiTurfs)
     setAvailableTurfs(avaiTurfs.data)
     console.log(availableTurfs)
@@ -265,8 +264,8 @@ const Dashboard =() => {
       }
 
       const addTurf=async()=>{
-          await axios.post("https://jusplayserver-2.onrender.com/availableTurfs",newTurf)
-          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:Math.floor(Math.random() * 5) + 1,user:User.id,bookings:[]})
+          await axios.post("http://localhost:5236/api/Turfs/AddTurf",newTurf)
+          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:Math.floor(Math.random() * 5) + 1,user:User.id})
       }
 
 
@@ -296,7 +295,7 @@ const Dashboard =() => {
   }
 
   const bookings=async()=>{
-    let response=await axios.get(API_URL)
+    let response=await axios.get("http://localhost:5236/api/JusPlay")//bookings get url
     let data=response.data
     let selected=data.find((user)=>user.email===useremail)
     navigate("/bookings",{state:selected})
@@ -387,7 +386,7 @@ const Dashboard =() => {
           ))}
         </ul>
       </Promotions> */}
-      <RegisterButton onClick={RegisterTurf}>Register your turf</RegisterButton>
+      {/* <RegisterButton onClick={RegisterTurf}>Register your turf</RegisterButton> */}
       {registerturf ? <FormWrapper>
       <StyledForm onSubmit={Submit}>
         <Heading>Add Turf Details</Heading>

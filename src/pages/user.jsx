@@ -112,16 +112,19 @@ const User = () => {
 
 
     profilePicture: "",
-    favorite_game:""
+    favoriteGame:""
   });
   const [isEditing, setIsEditing] = useState(false);
 
   // Load user data from local storage or server (mocked for now)
   useEffect(() => {
+
     
-    setUserData({username:user,favorite_game:favorite});
+    setUserData({username:user,favoriteGame:favorite});
   }, []);
+  
   console.log(userData.username)
+  console.log(userData.favoriteGame)
 
   const location=useLocation();
       const {state}=location;
@@ -129,7 +132,8 @@ const User = () => {
       
       
       user=User.name
-      favorite=User.favorite_game
+      favorite=User.favoriteGame
+  console.log(User)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -151,7 +155,7 @@ const User = () => {
   const handleSave = async () => {
     
     setIsEditing(false);
-    const response = await axios.get(API_URL);
+    const response = await axios.get("http://localhost:5236/api/JusPlay");
     const data=response.data;
     console.log(data)
     filtered=data.find((user)=>user.email===User.email)
@@ -162,16 +166,16 @@ const User = () => {
       id:User.id,
       email:User.email,
       name:userData.username,
-      favorite_game:userData.favorite_game,
+      favoriteGame:userData.favoriteGame,
       password:User.password,
-      profilePicture: userData.profilePicture
+      
     }
 
     console.log(final)
 
     
 
-    await axios.put(`${API_URL}/${filtered.id}`,final)
+    await axios.put("http://localhost:5236/api/JusPlay/updateUser",final)
 
 
 
@@ -180,7 +184,7 @@ const User = () => {
   const navigate=useNavigate()
   const handleDelete =async ()=>{
     console.log(User)
-    await axios.delete(`${API_URL}/${User.id}`)
+    await axios.delete(`http://localhost:5236/api/JusPlay/DeleteUser/${User.id}`)
     navigate("/Login")
 
   }
@@ -238,8 +242,8 @@ const User = () => {
           <Label>favorite_game</Label>
           <Input
             type="text"
-            name="favorite_game"
-            value={userData.favorite_game}
+            name="favoriteGame"
+            value={userData.favoriteGame}
             onChange={handleInputChange}
             disabled={!isEditing}
           />

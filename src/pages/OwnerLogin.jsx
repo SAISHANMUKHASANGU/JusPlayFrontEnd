@@ -105,12 +105,14 @@ const OwnerSignIn = () => {
     
 
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:5236/api/Owners");
       const users = response.data;
+      console.log(users)
 
-      const user = users.find(
+      let user = users.find(
         (user) => user.email === loginData.email && user.password === loginData.password
       );
+      
 
       if (user) {
         const updatedUser = {
@@ -118,7 +120,7 @@ const OwnerSignIn = () => {
           lastLogin: new Date().toISOString() // Store the last login time
         };
 
-        await axios.put(`${API_URL}/${user.id}`, updatedUser);
+        // await axios.put(`${API_URL}/${user.id}`, updatedUser);
 
         setSuccess('Login successful!');
         setError('');

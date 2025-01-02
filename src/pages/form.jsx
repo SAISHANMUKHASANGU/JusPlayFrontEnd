@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-let API_URL = "https://jusplayserver-2.onrender.com/users";
+let API_URL = "http://localhost:5236/api/JusPlay";
 
 const Div = styled.div`
   display: flex;
@@ -96,7 +96,7 @@ const ErrorMessage = styled.span`
 
 function Form() {
   const [error, setError] = useState({
-    email: null,
+    email: "",
     username: null,
     favorite_game: null,
     password: null,
@@ -108,9 +108,9 @@ function Form() {
   const [newuser, setNewUser] = useState({
     email: "",
     name: "",
-    favorite_game: "",
+    favoriteGame: "",
     password: "",
-    bookings: [],
+    
   });
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -122,7 +122,7 @@ function Form() {
 
   const fetchdata = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get("http://localhost:5236/api/JusPlay");
       setUsers(response.data);
     } catch (error) {
       console.log("Error fetching User", error);
@@ -140,6 +140,7 @@ function Form() {
     const nametype = /^[a-zA-Z]+$/;
 
     const filtered = users.filter((user) => user.email === newuser.email);
+    console.log(filtered)
 
     if (newuser.email === "") {
       setError({ email: "Email can't be Empty" });
@@ -197,14 +198,15 @@ function Form() {
 
   const addUser = async () => {
     try {
-      const response = await axios.post(API_URL, newuser);
+      const response = await axios.post("http://localhost:5236/api/JusPlay/addUser", newuser);
       setUsers([...users, response.data]);
       setNewUser({
-        name: "",
         email: "",
-        favorite_game: "",
+        name: "",
+        
+        favoriteGame: "",
         password: "",
-        bookings: [],
+        
       });
       setConfirmPassword("");
     } catch (error) {
@@ -214,6 +216,7 @@ function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(newuser);
     validation();
   };
 
@@ -287,9 +290,9 @@ function Form() {
             <Input
               type="text"
               name="favorite_game"
-              value={newuser.favorite_game}
+              value={newuser.favoriteGame}
               onChange={(e) =>
-                setNewUser({ ...newuser, favorite_game: e.target.value })
+                setNewUser({ ...newuser, favoriteGame: e.target.value })
               }
               placeholder="Favorite game"
             />

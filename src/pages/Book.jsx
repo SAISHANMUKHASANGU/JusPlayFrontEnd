@@ -391,9 +391,10 @@ function Book() {
     const { state } = location;
     const turf = state.turf.turf;
     const user = state.user.User;
+    console.log(state)
 
     const [filters, setFilters] = useState({
-        id: turf.bookings.length + 1,
+        
         turfid: turf.id,
         name: turf.name,
         price: turf.price,
@@ -401,16 +402,19 @@ function Book() {
         type: turf.type,
         shift: "Morning",
         date: "",
-        user: user.email, // Dynamic user email
+        mail: user.email, // Dynamic user email
     });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        let response = await axios.get(TURFS_URL);
-        let data = response.data;
-        let selected = data.find((turfs) => turfs.id === turf.id);
-        let bookings = selected.bookings;
+        // let response = await axios.get("http://localhost:5236/api/Turfs");
+        // let data = response.data;
+        // let selected = data.find((turfs) => turfs.id === turf.id);
+        // console.log(selected)
+        let booking = await axios.get("http://localhost:5236/api/Bookings");
+        let bookings=booking.data
+        console.log(bookings)
 
         let status = bookings.some(
             (book) =>
@@ -426,16 +430,16 @@ function Book() {
             alert(
                 `Slot booked at ${filters.name} for playing ${filters.type} at ${filters.shift}`
             );
-            selected.bookings.push(filters);
+            await axios.post("http://localhost:5236/api/Bookings/AddBooking",filters)
         }
 
-        await axios.put(`${TURFS_URL}/${turf.id}`, selected);
-        let userResponse = await axios.get(API_URL);
-        let users = userResponse.data;
-        let selectedUser = users.find((u) => u.email === filters.user);
+        // await axios.put(`${TURFS_URL}/${turf.id}`, selected);
+        // let userResponse = await axios.get(API_URL);
+        // let users = userResponse.data;
+        // let selectedUser = users.find((u) => u.email === filters.user);
 
-        selectedUser.bookings.push(filters);
-        await axios.put(`${API_URL}/${selectedUser.id}`, selectedUser);
+        // selectedUser.bookings.push(filters);
+        // await axios.put(`${API_URL}/${selectedUser.id}`, selectedUser);
 
         sendConfirmationEmail();
     };

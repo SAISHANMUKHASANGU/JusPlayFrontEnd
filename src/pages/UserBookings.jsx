@@ -53,39 +53,62 @@ min-height:100vh;
   background-repeat: no-repeat;`
 
 const [book,setBook]=useState("")
+const [bookings,setBookings]=useState([])
+console.log(bookings)
 
 useEffect(() => {
     
     console.log("hello")
   }, [book]);
 
+useEffect(()=>{
+  
+  fetchdata()
+},[]);
+
+const fetchdata=async()=>{
+  const fetchedresponse=await axios.get("http://localhost:5236/api/Bookings")
+  const fetcheddata=fetchedresponse.data.filter((element)=>element.mail===state.email)
+  let response=await axios.get("http://localhost:5236/api/Bookings")
+  console.log(response.data)
+  
+  setBookings(fetcheddata)
+  
+}
+
+
+
+    
     const location=useLocation()
     const {state}=location;
     console.log(state)
     
     
-    const [bookings,setBookings]=useState(state.bookings)
-    console.log(bookings)
+    
+    
 
   const Cancel=async(booking)=>{
-    console.log(booking)
-    let response=await axios.get(API_URL)
-    let data=response.data
-    let selected=data.find((user)=>user.email===state.email)
+    // console.log(booking)
+    // let response=await axios.get(API_URL)
+    // let data=response.data
+    // let selected=data.find((user)=>user.email===state.email)
     
-    console.log(selected.bookings)
-    selected.bookings=selected.bookings.filter((book)=>book.date!==booking.date || book.name!==booking.name || book.shift !== booking.shift || book.type!==booking.type)
-    console.log(selected.bookings)
-    console.log(selected)
-    await axios.put(`${API_URL}/${selected.id}`,selected)
-    let turfresponse=await axios.get(TURFS_URL)
-    let turfdata=turfresponse.data
-    let selectedturf=turfdata.find((data)=>data.id===booking.turfid)
-    selectedturf.bookings=selectedturf.bookings.filter((book)=>book.date!==booking.date || book.name!==booking.name || book.shift !== booking.shift|| book.type!==booking.type)
-    await axios.put(`${TURFS_URL}/${selectedturf.id}`,selectedturf)
+    // console.log(selected.bookings)
+    // selected.bookings=selected.bookings.filter((book)=>book.date!==booking.date || book.name!==booking.name || book.shift !== booking.shift || book.type!==booking.type)
+    // console.log(selected.bookings)
+    // console.log(selected)
+    // await axios.put(`${API_URL}/${selected.id}`,selected)
+    // let turfresponse=await axios.get(TURFS_URL)
+    // let turfdata=turfresponse.data
+    // let selectedturf=turfdata.find((data)=>data.id===booking.turfid)
+    // selectedturf.bookings=selectedturf.bookings.filter((book)=>book.date!==booking.date || book.name!==booking.name || book.shift !== booking.shift|| book.type!==booking.type)
+    // await axios.put(`${TURFS_URL}/${selectedturf.id}`,selectedturf)
     
-    setBookings(selected.bookings)
-    console.log(bookings)
+    // setBookings(selected.bookings)
+    // console.log(bookings)
+
+    await axios.delete(`http://localhost:5236/api/Bookings/DeleteBooking/${booking.id}`)
+    fetchdata()
 
   }
     
@@ -94,7 +117,7 @@ useEffect(() => {
     <>
       <Div>
         <h1 style={{textAlign:'center',color:'white'}}>MY BOOKINGS</h1>
-        {bookings.length>0?
+        {bookings &&
         (bookings.map((booking)=>(<BookingDetails>
             <DetailHeading>Turf Name: {booking.name}</DetailHeading>
             <DetailHeading>Booking Date: {booking.date}</DetailHeading>
@@ -123,8 +146,7 @@ useEffect(() => {
           </div>
           <button type="submit">Submit</button>
         </form> */}
-          </BookingDetails>))):
-        <BookingDetails><h3 style={{textAlign:'center'}}>No Bookings</h3></BookingDetails>}
+          </BookingDetails>)))}
       </Div>
 
     </>
