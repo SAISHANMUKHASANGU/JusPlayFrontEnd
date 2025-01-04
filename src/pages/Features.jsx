@@ -37,9 +37,9 @@ const FeaturesTitle = styled.h1`
 const FeaturesList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 69px;
   justify-items: center;
-  padding: 0 10px;
+  padding: 20px;
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
@@ -51,6 +51,8 @@ const FeatureItem = styled.div`
   border: 2px solid #ddd;
   border-radius: 10px;
   padding: 20px;
+  margin-right:20px;
+  
   width: 100%;
   max-width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -131,11 +133,11 @@ function Features() {
       title: "Location-Based Search",
       description: "Find nearby turfs using our map-based search feature.",
     },
-    {
-      icon: "⭐",
-      title: "User Reviews & Ratings",
-      description: "View reviews and ratings to choose the best turf for your game.",
-    },
+    // {
+    //   icon: "⭐",
+    //   title: "User Reviews & Ratings",
+    //   description: "View reviews and ratings to choose the best turf for your game.",
+    // },
     
   ];
 

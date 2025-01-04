@@ -116,7 +116,7 @@ const OwnerDashboard =() => {
     
     name: "",
       image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
-      type: "",
+      type: "Cricket",
       price: null,
       location: "",
       rating:parseInt(Math.floor(Math.random() * 5) + 1),
@@ -309,6 +309,7 @@ const OwnerDashboard =() => {
       }
 
       const addTurf=async()=>{
+          console.log(newTurf)
           await axios.post("http://localhost:5236/api/Turfs/AddTurf",newTurf)
           // let turfslength=(await axios.get("https://jusplayserver-2.onrender.com/availableTurfs")).data.length
           // console.log(turfslength)
@@ -330,7 +331,7 @@ const OwnerDashboard =() => {
           setTurfs(filtered)
         
 
-          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:parseInt(Math.floor(Math.random() * 5)) + 1,user:User.email})
+          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "Cricket",price: "",location: "",rating:parseInt(Math.floor(Math.random() * 5)) + 1,usermail:User.email})
       }
 
 
@@ -547,13 +548,19 @@ const handlechange=(e)=>{
       
           </div>
         )}
-        <Input
+        <select name="type" value={newTurf.type} onChange={handleInputChange}>
+            
+            <option value="Cricket" defaultChecked>Cricket</option>
+            <option value="Football">Football</option>
+            <option value="Badminton">Badminton</option>
+          </select>
+        {/* <Input
           type="text"
           name="type"
           value={newTurf.type}
           placeholder="Sport"
           onChange={handleInputChange}
-        />
+        /> */}
         {error.type && (<div>
               
               <span>{error.type}</span>
