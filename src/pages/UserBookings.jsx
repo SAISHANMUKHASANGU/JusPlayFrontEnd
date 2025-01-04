@@ -71,6 +71,21 @@ min-height:100vh;
   background-repeat: no-repeat;
   padding:60px`
 
+const CancelBut=styled.button`
+  padding:5px;
+  margin:5px;
+  background-color:red;
+  border:none;
+  border-radius:5px;
+  color:white;
+  font-weight:Bold;
+
+  &:hover{
+    cursor:pointer;
+  }
+
+`
+
 const [book,setBook]=useState("")
 const [bookings,setBookings]=useState([])
 console.log(bookings)
@@ -142,7 +157,7 @@ const fetchdata=async()=>{
             <DetailHeading>Booking Date: {booking.date}</DetailHeading>
             <DetailHeading>Turf Location: {booking.location}</DetailHeading>
             <DetailHeading>Shift: {booking.shift}</DetailHeading>
-            <button onClick={()=>Cancel(booking)}>Cancel</button>
+            <CancelBut onClick={()=>Cancel(booking)}>Cancel</CancelBut>
             {/* <form onSubmit={handleSubmit}>
           <div className="rating">
             <h3>Rate Us:</h3>

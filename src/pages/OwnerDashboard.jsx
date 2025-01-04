@@ -475,9 +475,12 @@ const UpdateTurf=async()=>{
   <TurfDetail>Turf Location: {turf.location} </TurfDetail>
   <TurfDetail>Price for Session: {turf.price}</TurfDetail>
   <TurfDetail>Sport: {turf.type}</TurfDetail>
+  <div style={{display:"flex", alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
   <Button onClick={()=>handleEdit(turf)} >Edit</Button>
   
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
+  </div>
+  
 </TurfCard>)))}
       {/* <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
@@ -748,24 +751,6 @@ const TurfCard = styled.div`
     color: #555;
   }
 
-  button {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 10px auto;
-    padding: 10px;
-    background-color: #0073e6;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    width:100px;  
-    transition: background-color 0.3s;
-  }
-
-  button:hover {
-    background-color: #005bb5;
-  }
 `;
 
 const Promotions = styled.section`
@@ -823,22 +808,20 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background-color: #5b8cfa;
-  color: #ffffff;
+  background-color:rgb(12, 69, 201);
+  color: white;
   border: none;
   border-radius: 4px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  width:100px;
+  transition: background-color 0.2s, transform 0.2s;
+  
 
-  &:hover {
-    background-color: #407ee8;
-  }
-
+  
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.95);
   }
 `;
 
@@ -934,14 +917,14 @@ const TurfDetail = styled.p`
 `;
 
 const RemoveButton = styled.button`
-  background-color: #dc3545;
+  background-color: red;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
-  align-self: flex-end;
+  width:100px;
   transition: background-color 0.2s, transform 0.2s;
   
 
