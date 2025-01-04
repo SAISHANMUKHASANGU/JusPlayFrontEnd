@@ -69,7 +69,11 @@ min-height:100vh;
   background-image: url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
   background-size: cover;
   background-repeat: no-repeat;
-  padding:60px`
+  padding:60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  `
 
 const CancelBut=styled.button`
   padding:5px;
@@ -84,6 +88,15 @@ const CancelBut=styled.button`
     cursor:pointer;
   }
 
+`
+const BackButton = styled.button`
+  background-color: #6c757d;
+  margin-top: 1rem;
+  width:150px;
+  
+  &:hover {
+    background-color: #5a6268;
+  }
 `
 
 const [book,setBook]=useState("")
@@ -146,6 +159,9 @@ const fetchdata=async()=>{
     fetchdata()
 
   }
+  const handleBack = () => {
+    window.location.href = "/dashboard";
+  };
     
 
   return (
@@ -182,6 +198,9 @@ const fetchdata=async()=>{
           <button type="submit">Submit</button>
         </form> */}
           </BookingDetails>)))}
+        <BackButton type="button" onClick={handleBack}>
+          Back to Dashboard
+        </BackButton>
       </Div>
 
     </>

@@ -277,9 +277,9 @@ const User = () => {
             Edit Profile
           </Button>
         )}
-        {/* <BackButton type="button" onClick={handleBack}>
+        <BackButton type="button" onClick={handleBack}>
           Back to Dashboard
-        </BackButton> */}
+        </BackButton>
         <BackButton type="button" onClick={handleDelete}>
           Delete
         </BackButton>

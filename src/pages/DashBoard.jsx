@@ -147,7 +147,7 @@ const Dashboard =() => {
     console.log(availableTurfs)
     console.log(filters.location)
     console.log(filters.type)
-    let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location===filters.location)
+    let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.toLowerCase()===filters.location.toLowerCase())
     console.log(filteredturf)
     setFilteredTurfs(filteredturf)
   }
