@@ -15,15 +15,35 @@ const Div=styled.div`
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:80px;
+  padding-bottom:20px;
 `
 
 const Container = styled.div`
-  min-width: 600px;
+  width: 600px;
   
   padding: 1.5rem;
   background-color: #f8f9fa;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+   @media (max-width: 768px) {
+    
+    height: auto;
+    width:auto;
+  }
+
+  /* Media Query for mobile devices */
+  @media (max-width: 480px) {
+    height: auto;
+    width:auto
+    flex-direction: column;
+  }
+  
+  @media (max-width: 375px) {
+    height: auto;
+    width:auto
+    flex-direction: column;
+  }
   
   
 `;

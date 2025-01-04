@@ -7,10 +7,18 @@ import { faFacebook, faInstagram, faTwitter, faYoutube, faLinkedin } from "@fort
 const FooterWrapper = styled.footer`
   background-color: #0f172a;
   color: #ffffff;
-  padding: 40px 20px;
   text-align: center;
   position: relative;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  padding: 40px 20px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 `;
 
 const FooterContainer = styled.div`
@@ -20,6 +28,11 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const FooterBranding = styled.div`
@@ -28,6 +41,10 @@ const FooterBranding = styled.div`
 
   @media (min-width: 1024px) {
     text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    flex: 1;
   }
 `;
 
@@ -58,6 +75,11 @@ const FooterLinks = styled.div`
 
   @media (min-width: 1024px) {
     text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    flex: 1;
+    text-align: center;
   }
 `;
 
@@ -94,12 +116,21 @@ const FooterSocials = styled.div`
   @media (min-width: 1024px) {
     text-align: right;
   }
+
+  @media (max-width: 768px) {
+    flex: 1;
+    text-align: center;
+  }
 `;
 
 const SocialIcons = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 `;
 
 const SocialIconLink = styled.a`
@@ -119,6 +150,16 @@ const FooterBottom = styled.div`
   margin-top: 20px;
   font-size: 0.9rem;
   color: #9ca3af;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding-top: 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    padding-top: 10px;
+  }
 `;
 
 function Footer() {
@@ -147,7 +188,6 @@ function Footer() {
             <LinkItem>
               <FooterLink href="/features">Features</FooterLink>
             </LinkItem>
-            
           </LinksList>
         </FooterLinks>
 
@@ -183,13 +223,6 @@ function Footer() {
             >
               <FontAwesomeIcon icon={faLinkedin} />
             </SocialIconLink>
-            {/* <SocialIconLink
-              href="https://www.youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faYoutube} />
-            </SocialIconLink> */}
           </SocialIcons>
         </FooterSocials>
       </FooterContainer>
@@ -199,4 +232,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Footer;

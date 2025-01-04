@@ -311,12 +311,11 @@ const Dashboard =() => {
       <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
         
-       <div style={{display:'flex',gap:'15px'}}>
+      <ResponsiveDiv>
       <ProfileButton onClick={goto}>Profile</ProfileButton>
       <BookingsButton onClick={bookings}>Bookings</BookingsButton>
       <LogoutButton onClick={logout}>Logout</LogoutButton>
-
-       </div>
+    </ResponsiveDiv>
         
         {/* {nextBooking && (
           <NextBooking>
@@ -463,7 +462,15 @@ const DashboardWrapper = styled.div`
   flex-direction:column;
   gap:10px;
   min-height:100vh;
-  border
+  @media (max-width: 768px) {
+    padding: 15px;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    gap: 6px;
+  }
   
   
   
@@ -526,6 +533,29 @@ const Filters = styled.section`
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+   @media (max-width: 768px) {
+    padding: 15px;
+
+    input,
+    select {
+      padding: 6px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+
+    h2 {
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      padding: 4px;
+      font-size: 14px;
+    }
+  }
 `;
 
 const Turfs = styled.section`
@@ -533,12 +563,24 @@ const Turfs = styled.section`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  
 `;
 
 const TurfsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const TurfCard = styled.div`
@@ -557,6 +599,23 @@ const TurfCard = styled.div`
     width: 100%;
     height: 150px;
     object-fit: cover;
+
+     @media (max-width: 768px) {
+      height: 120px;
+    }
+
+    @media (max-width: 480px) {
+      height: 100px;
+    }
+  }
+
+  h3 {
+    margin: 10px;
+    font-size: 18px;
+
+    @media (max-width: 480px) {
+      font-size: 16px;
+    }
   }
 
   h3 {
@@ -586,6 +645,15 @@ const TurfCard = styled.div`
   button:hover {
     background-color: #005bb5;
   }
+
+   @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 8px;
+    }
 `;
 
 const Promotions = styled.section`
@@ -615,6 +683,14 @@ const FormWrapper = styled.div`
   align-items: center;
   height: 100vh;
   background-color: #f7f9fc;
+
+   @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -626,6 +702,18 @@ const StyledForm = styled.form`
   flex-direction: column;
   gap: 1.5rem;
   width: 300px;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    gap: 0.75rem;
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
@@ -639,6 +727,16 @@ const Input = styled.input`
   &:focus {
     border-color: #5b8cfa;
     box-shadow: 0 0 5px rgba(91, 140, 250, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -773,3 +871,33 @@ const Div=styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `
+
+const ResponsiveDiv = styled.div`
+  display: flex;
+  
+  
+  gap: 10px;
+  padding: 10px;
+
+  // Default styles
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  // Media queries for responsiveness
+  @media (max-width: 768px) {
+    flex-direction: column;
+    button {
+      width: 100%;
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    button {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  }
+    `

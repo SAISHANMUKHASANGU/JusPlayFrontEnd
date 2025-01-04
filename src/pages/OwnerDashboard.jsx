@@ -391,13 +391,15 @@ const OwnerDashboard =() => {
     
   }
 
-  const Edit=()=>{
+  const handleEdit=(turf)=>{
     if(edit===true)
     {
       setEdit(false)
     }
     else{
       setEdit(true)
+
+      
     }
   }
 
@@ -428,14 +430,24 @@ const handlechange=(e)=>{
     <Div>
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
+      {edit&&(<TurfCard>
+        <TurfDetail>turf Name:<input type="text" /></TurfDetail>
+              <TurfDetail>turf Location:<input type="text" /></TurfDetail>
+              <TurfDetail>price for session:<input type="number" /></TurfDetail>
+              <TurfDetail>Sport:<input type="text" /></TurfDetail>
+              <Button onClick={()=>UpdateTurf(turf)} >submit</Button>
+
+              
+      </TurfCard>
+        )}
         
         {turfs&&
         (turfs.map((turf)=>(<TurfCard>
-  <TurfDetail>Turf Name: <input type="text" value={turf.name} disabled="true"/></TurfDetail>
-  <TurfDetail>Turf Location: <input type="text" value={turf.location} disabled="true"/> </TurfDetail>
-  <TurfDetail>Price for Session: <input type="number" value={turf.price} disabled={!edit} onChange={handlechange}/></TurfDetail>
-  <TurfDetail>Sport: <input type="text" value={turf.type} disabled="true" /></TurfDetail>
-  {/* {edit?<Button onClick={()=>Save(turf)}>Save</Button>:<Button onClick={()=>Edit()}>Edit</Button>} */}
+  <TurfDetail>Turf Name: {turf.name} </TurfDetail>
+  <TurfDetail>Turf Location: {turf.location} </TurfDetail>
+  <TurfDetail>Price for Session: {turf.price}</TurfDetail>
+  <TurfDetail>Sport: {turf.type}</TurfDetail>
+  <Button onClick={()=>handleEdit(turf)} >Edit</Button>
   
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
 </TurfCard>)))}
@@ -882,6 +894,9 @@ const TurfDetail = styled.p`
   margin: 0;
   font-size: 14px;
   color: #333;
+  margin:5px;
+  padding:5px;
+  background-color:white;
 `;
 
 const RemoveButton = styled.button`
