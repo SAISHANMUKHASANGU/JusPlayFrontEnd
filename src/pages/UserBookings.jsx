@@ -102,7 +102,8 @@ useEffect(()=>{
 
 const fetchdata=async()=>{
   const fetchedresponse=await axios.get("http://localhost:5236/api/Bookings")
-  const fetcheddata=fetchedresponse.data.filter((element)=>element.mail===state.email)
+  const fetcheddata=fetchedresponse.data.filter((element)=>element.mail===localStorage.getItem("user"))
+  console.log(fetcheddata)
   let response=await axios.get("http://localhost:5236/api/Bookings")
   console.log(response.data)
   

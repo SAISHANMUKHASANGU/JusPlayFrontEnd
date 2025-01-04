@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FaSave } from 'react-icons/fa';
 import { Navigate, NavLink, UNSAFE_createClientRoutesWithHMRRevalidationOptOut, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { userConsumer } from '../context/UserContext';
 // import turf1 from "./images/turf1.jpg"
 
 let API_URL="https://jusplayserver-2.onrender.com/owners"
@@ -44,17 +45,17 @@ const OwnerDashboard =() => {
   
 
   const location=useLocation();
-    const {state}=location;
-    User=state.User;
-    email=state.User.email
-    // console.log("User")
-    // console.log(User)
+    // const {state}=location;
+    // User=state.User;
+    // email=state.User.email
+    // // console.log("User")
+    // // console.log(User)
 
     
 
     
     
-    useremail=state.email
+    // useremail=state.email
     
     
     
@@ -89,7 +90,7 @@ const OwnerDashboard =() => {
     const response=await axios.get("http://localhost:5236/api/Turfs")
     const data=response.data
     // console.log(response.data)
-    const filtered=data.filter((element)=>element.usermail===User.email)
+    const filtered=data.filter((element)=>element.usermail===localStorage.getItem("loggedinowner"))
     // console.log(filtered)
     ownerturfs=filtered;
     // console.log(ownerturfs)
@@ -99,9 +100,9 @@ const OwnerDashboard =() => {
   }
   // getdata()
 
-    
+
   
-  const [UserID,setUserID]=useState(User.id);
+  
   const [Username,setUsername]=useState(null);
   const [nextBooking, setNextBooking] = useState(null);
   const [recentActivity, setRecentActivity] = useState([]);
@@ -112,6 +113,8 @@ const OwnerDashboard =() => {
   const [registerturf,setRegisterTurf]=useState(false)
   const [turfs,setTurfs]=useState(null)
   const [id,setID]=useState()
+  const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
+  
   const [newTurf,setNewturf]=useState({
     
     name: "",
@@ -120,7 +123,7 @@ const OwnerDashboard =() => {
       price: null,
       location: "",
       rating:parseInt(Math.floor(Math.random() * 5) + 1),
-      usermail:User.email,
+      usermail:localStorage.getItem("loggedinowner"),
       
   })
   const [editableturf,setEditable]=useState({
@@ -206,9 +209,11 @@ const OwnerDashboard =() => {
   //   console.log(filtered)
   // }
   const logout=async ()=>{
-    navigate("/Login")
+    navigate("/ownerlogin")
+    setOwnerlogin("false")
+    localStorage.setItem("ownerlogins",)
 
-    localStorage.setItem('logins',false)
+    
   }
   const navigate=useNavigate()
 
@@ -217,7 +222,7 @@ const OwnerDashboard =() => {
     let data=response.data
     // console.log(data)
     
-    let selected=data.find((user)=>user.email===User.email)
+    let selected=data.find((user)=>user.email===localStorage.getItem("loggedinowner"))
     console.log(selected)
     navigate("/user",{state:selected})
   }
@@ -321,16 +326,7 @@ const OwnerDashboard =() => {
       const addTurf=async()=>{
           console.log(newTurf)
           await axios.post("http://localhost:5236/api/Turfs/AddTurf",newTurf)
-          // let turfslength=(await axios.get("https://jusplayserver-2.onrender.com/availableTurfs")).data.length
-          // console.log(turfslength)
-          // let response=await axios.get(API_URL)
-          // let data=response.data
-          // let selectedowner=data.find((data)=>data.email===User.email)
-          // selectedowner.turfs.push(newTurf)
-          // let id=selectedowner.id
-          // await axios.put(`${API_URL}/${id}`,selectedowner)
-          // console.log(selectedowner.turfs)
-          // setTurfs(selectedowner.turfs)
+          
           let response=await axios.get("http://localhost:5236/api/Turfs")
           const data=response.data
     // console.log(response.data)
@@ -341,7 +337,7 @@ const OwnerDashboard =() => {
           setTurfs(filtered)
         
 
-          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "Cricket",price: "",location: "",rating:parseInt(Math.floor(Math.random() * 5)) + 1,usermail:User.email})
+          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,type: "Cricket",price: "",location: "",rating:parseInt(Math.floor(Math.random() * 5)) + 1,usermail:User.email})
       }
 
 
@@ -370,13 +366,7 @@ const OwnerDashboard =() => {
       
   }
 
-  const bookings=async()=>{
-    let response=await axios.get(API_URL)
-    let data=response.data
-    let selected=data.find((user)=>user.email===useremail)
-    navigate("/bookings",{state:selected})
-
-  }
+  
   const remove=async(turf)=>{
     // let response=await axios.get(API_URL)
     // let data=response.data
@@ -425,21 +415,7 @@ const OwnerDashboard =() => {
     }
   }
 
-  const Save=(turf)=>{
-    console.log(turf)
-    setEdit(false)
-    let final={
-      id:turf.id,
-      image:turf.image,
-      location:turf.location,
-      name:turf.name,
-      price:turf.price,
-      rating:turf.rating,
-      type:turf.type,
-      usermail:turf.usermail
-    }
-
-  }
+  
 
 const handlechange=(e)=>{
   const { name, value } = e.target;
@@ -456,6 +432,7 @@ const UpdateTurf=async()=>{
 
   return (
     <Div>
+      <Button onClick={logout}>logout</Button>
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
       {edit&&(<TurfCard>
@@ -813,6 +790,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   padding: 8px 12px;
+  margin:5px;
   font-size: 14px;
   cursor: pointer;
   width:100px;

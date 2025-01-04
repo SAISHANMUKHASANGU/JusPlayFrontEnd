@@ -1,12 +1,8 @@
-// import { Navigate } from "react-router-dom";
-// import React from 'react'
+import { Navigate } from "react-router-dom";
+import React from 'react'
 
-// const ProtectedRoute=({islogin,})=> {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
+const ProtectedRoute=({islogin,children})=> {
+  return islogin?children:<Navigate to="/Login"/>
+}
 
-// export default ProtectedRoute
+export default ProtectedRoute

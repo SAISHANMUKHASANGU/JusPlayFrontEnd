@@ -133,11 +133,7 @@ function Features() {
       title: "Location-Based Search",
       description: "Find nearby turfs using our map-based search feature.",
     },
-    // {
-    //   icon: "⭐",
-    //   title: "User Reviews & Ratings",
-    //   description: "View reviews and ratings to choose the best turf for your game.",
-    // },
+    
     
   ];
 

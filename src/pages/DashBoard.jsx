@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Navigate, NavLink, UNSAFE_createClientRoutesWithHMRRevalidationOptOut, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { userConsumer } from '../context/UserContext';
 // import turf1 from "./images/turf1.jpg"
 
-let API_URL="https://jusplayserver-2.onrender.com/users"
-let TURFS_URL="https://jusplayserver-2.onrender.com/availableTurfs"
+
 
 let User;
 let useremail;
@@ -18,13 +18,13 @@ const Dashboard =() => {
   
 
   const location=useLocation();
-    const {state}=location;
-    User=state;
-    console.log(User)
+    // const {state}=location;
+    // User=state;
+    // console.log(User)
     
     
     
-    useremail=state.email
+    // useremail=state.email
     
     
     
@@ -39,19 +39,17 @@ const Dashboard =() => {
     
   }
 
-  useEffect(()=>{
-      getuserdata()
-    },[])
   
-  const [UserID,setUserID]=useState(User.id);
+  const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
+  
+  // const [UserID,setUserID]=useState(User.id);
   const [Username,setUsername]=useState(null);
-  const [nextBooking, setNextBooking] = useState(null);
-  const [recentActivity, setRecentActivity] = useState([]);
+
   const [availableTurfs, setAvailableTurfs] = useState();
   const [filters, setFilters] = useState({ location: '',  type: 'Cricket'});
-  const [promotions, setPromotions] = useState([]);
+
   const [filteredturfs,setFilteredTurfs]=useState([]);
-  const [registerturf,setRegisterTurf]=useState(false)
+
   const [newTurf,setNewturf]=useState({
     name: "",
       image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
@@ -59,33 +57,13 @@ const Dashboard =() => {
       price: "",
       location: "",
       rating:Math.floor(Math.random() * 5) + 1,
-      user:User.email,
+      user:localStorage.getItem("user"),
   })
   // useEffect(()=>getdata(),[])
   useEffect(() => {
-    getdata()
-    // Simulating data fetching
-    setNextBooking({
-      turfName: 'Seaside Turf',
-      date: '2024-12-15',
-      time: '5:00 PM',
-    });
-
-
-    // useLocation()
-  
-
-    setRecentActivity([
-      { id: 1, turfName: 'City Sports Arena', status: 'Completed' },
-      { id: 2, turfName: 'Greenfield Ground', status: 'Cancelled' },
-    ]);
-
     
-
-    setPromotions([
-      { code: 'WELCOME10', discount: '10% off on first booking' },
-      { code: 'FESTIVE20', discount: '20% off during festive season' },
-    ]);
+    // Simulating data fetching
+    
 
     apifetch()
   }, []);
@@ -101,7 +79,7 @@ const Dashboard =() => {
       console.log(users)
 
       const user = users.find(
-        (user) => user.email ===useremail 
+        (user) => user.email ===localStorage.getItem("user") 
       );
       
 
@@ -133,23 +111,7 @@ const Dashboard =() => {
 
  
 
-  const getdata=async ()=>{
-    // let data=JSON.parse(localStorage.getItem('logins'))
-    // console.log(data)
-    // const response = await axios.get(
-    //   `${API_URL}`
-    // );
-
-    // console.log(response.data)
-    // console.log(data.email)
-    
-
-    // const present=response.data.find((user)=>user.email===data.email)
-    // console.log(present.email)
-    // useremail=present.email
-    console.log("dnskldnkl")
-    
-  }
+  
 
   // const logout=async ()=>{
   //   let data=JSON.parse(localStorage.getItem('logins'))
@@ -158,6 +120,9 @@ const Dashboard =() => {
   // }
   const logout=async ()=>{
     navigate("/Login")
+    setLogin("false")
+    console.log(login)
+
 
     localStorage.setItem('logins',false)
   }
@@ -177,122 +142,33 @@ const Dashboard =() => {
     navigate("/book",{state:{turf:{turf},user:{User}}});
   };
 
-  const Filter=async()=>{
-    console.log("hello")
-    let avaiTurfs=await axios.get("http://localhost:5236/api/Turfs")
-    console.log(avaiTurfs)
-    setAvailableTurfs(avaiTurfs.data)
+  const function1=(data)=>{
+    
     console.log(availableTurfs)
     console.log(filters.location)
     console.log(filters.type)
-    let filteredturf= availableTurfs.filter((turf)=>turf.type===filters.type  && turf.location===filters.location)
+    let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location===filters.location)
     console.log(filteredturf)
     setFilteredTurfs(filteredturf)
+  }
+
+  const Filter=async()=>{
+    console.log("hello")
+    let avaiTurfs=await axios.get("http://localhost:5236/api/Turfs")
+    let data=avaiTurfs.data
+    console.log(data)
+    let data1=data
+    setAvailableTurfs(data)
+    function1(data1)
+    
+    
+    
     
   }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewturf((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const[error,setError]=useState({
-    name:null,
-    type:null,
-    price:null,
-    location:null
-  })
-
-  const validation=async()=>{
-      let response=(await axios.get(TURFS_URL)).data
-      let filtered=response.filter((turf)=>turf.name===newTurf.name)
-      if(filtered.length>0)
-      {
-        let errormessage="Turf already exists"
-        setError({name:errormessage})
-        return
-      }
-      if(newTurf.name==="")
-      {
-        let errormessage="Turf name can't be empty"
-        setError({name:errormessage})
-        return
-      }
-      if(newTurf.type==="")
-      {
-        let errormessage="Sport can't be empty"
-        setError({type:errormessage})
-        return
-      }
-      if(newTurf.type!="Cricket"&& newTurf.type!="Football"&&newTurf.type!="Badminton")
-      {
-        console.log(newTurf.type)
-        let errormessage="Sport can be only Cricket or Football or Badminton"
-        setError({type:errormessage})
-        return
-      }
-      if(newTurf.price==="")
-      {
-        let errormessage="price can't empty"
-        setError({price:errormessage})
-        return
-      }
-      if(newTurf.price<100 && newTurf.price>=0)
-        {
-          let errormessage="price can't be less than 100"
-          setError({price:errormessage})
-          return
-        }
-      if(newTurf.price<0)
-        {
-            let errormessage="price can't be negative"
-            setError({price:errormessage})
-            return
-        }
-      if(newTurf.location==="")
-      {
-        let errormessage="Location can't be empty"
-          setError({location:errormessage})
-          return
-      }
-      else{
-        console.log(newTurf)
-        addTurf()
-        alert("New turf is added")
-        setError({name:null,type:null,price:null,location:null})
-      }
-      }
-
-      const addTurf=async()=>{
-          await axios.post("http://localhost:5236/api/Turfs/AddTurf",newTurf)
-          setNewturf({name: "",image: `./images/turf${Math.floor(Math.random() * 7) + 1}`,type: "",price: "",location: "",rating:Math.floor(Math.random() * 5) + 1,user:User.id})
-      }
-
-
+  
 
   
-  
-  const Submit=async(event)=>{
-    event.preventDefault()
-    console.log(newTurf)
-    validation()
-    
-
-  }
-
-  const RegisterTurf=()=>{
-    if(registerturf)
-    {
-      setRegisterTurf(false)
-    }
-    else
-    {
-      setRegisterTurf(true)
-    }
-    console.log(registerturf)
-      
-      
-  }
 
   const bookings=async()=>{
     let response=await axios.get("http://localhost:5236/api/JusPlay")//bookings get url
@@ -386,7 +262,7 @@ const Dashboard =() => {
         </ul>
       </Promotions> */}
       {/* <RegisterButton onClick={RegisterTurf}>Register your turf</RegisterButton> */}
-      {registerturf ? <FormWrapper>
+      {/* {registerturf ? <FormWrapper>
       <StyledForm onSubmit={Submit}>
         <Heading>Add Turf Details</Heading>
         <Input
@@ -444,7 +320,7 @@ const Dashboard =() => {
         )}
         <Button type="submit">Submit</Button>
       </StyledForm>
-      </FormWrapper>:""}
+      </FormWrapper>:""} */}
     </DashboardWrapper>
     </Div>
   );

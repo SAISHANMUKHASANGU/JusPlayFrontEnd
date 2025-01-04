@@ -222,7 +222,6 @@ function Form() {
       setNewUser({
         email: "",
         name: "",
-        
         favoriteGame: "",
         password: "",
         

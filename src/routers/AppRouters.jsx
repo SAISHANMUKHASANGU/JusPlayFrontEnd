@@ -1,4 +1,4 @@
-import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
+import {BrowserRouter as Router,Routes,Route, Navigate} from "react-router-dom"
 
 import Main from "../pages/main"
 import Form from "../pages/form"
@@ -10,46 +10,46 @@ import Products from "../pages/Products"
 import SignIn from "../pages/Login"
 import Dashboard from "../pages/DashBoard"
 import User from "../pages/user"
-import Userlayout from "../layout/Userlayout"
+
 import Book from "../pages/Book"
 import Features from "../pages/Features"
 import UserBookings from "../pages/UserBookings"
 import Owner from "../pages/OwnerSignup"
 import OwnerSignIn from "../pages/OwnerLogin"
 import OwnerDashboard from "../pages/OwnerDashboard"
+import { userConsumer } from "../context/UserContext"
 
+let islogin="false"
 function AppRouters() {
+  const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer();
   
+    
+
   return (
     <>
-        
+        {/* <h1>{login}</h1>
+        <h1>{ownerlogin}</h1> */}
+
           
           <Router>
           <MainLayout>
           <Routes>
-          <Route path="/" element={<Main />}/>
+          <Route path="/" element={<Main/>}/>
           <Route path="/signup" element={<Form/>}/>
           <Route path="/Products" element={<Products/>}/>
-          <Route path="/Login" element={<SignIn/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/user" element={<User/>}/>
-          <Route path="/book" element={<Book/>}/>
+          <Route path="/login" element={<SignIn/>}/>
+          <Route path="/dashboard" element={login==="true"?<Dashboard/>:<Navigate to="/login"/>}/>
+          <Route path="/user" element={login==="true"?<User/>:<Navigate to="/login"/>}/>
+          <Route path="/book" element={login==="true"?<Book/>:<Navigate to="/login"/>}/>
           <Route path="/features" element={<Features/>}/>
-          <Route path="/bookings" element={<UserBookings/>}/>
+          <Route path="/bookings" element={login==="true"?<UserBookings/>:<Navigate to="/login"/>}/>
           <Route path="/owner" element={<Owner/>}/>
           <Route path="/ownerlogin" element={<OwnerSignIn/>}/>
-          <Route path="/ownerdashboard" element={<OwnerDashboard/>}/>
+          <Route path="/ownerdashboard" element={ownerlogin==="true"?<OwnerDashboard/>:<Navigate to="/ownerlogin"/>}/>
           </Routes>
       </MainLayout>
       </Router>
-          
-          
-            
-          
-            
-            
-        
-        </>
+    </>
             
         
     

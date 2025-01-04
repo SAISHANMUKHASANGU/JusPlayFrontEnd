@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { userConsumer } from '../context/UserContext';
 
 let API_URL = "https://jusplayserver-2.onrender.com/owners";
 
@@ -100,11 +101,14 @@ const SignInButton = styled.button`
 `;
 
 const OwnerSignIn = () => {
+  const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
+  
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: ''
   });
-  const [logins,setLogins]=useState(false)
+  const [logins,setLogins]=useState(ownerlogin)
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
@@ -117,7 +121,7 @@ const OwnerSignIn = () => {
     });
   };
   useEffect(()=>{
-    localStorage.setItem('logins',logins)
+    localStorage.setItem('ownerlogins',logins)
   },[logins])
 
 
@@ -146,8 +150,13 @@ const OwnerSignIn = () => {
 
         setSuccess('Login successful!');
         setError('');
-        navigate("/ownerdashboard", {state:{User:user}})
         setLogins(true)
+        setOwnerlogin("true")
+        navigate("/ownerdashboard")
+        localStorage.setItem("loggedinowner",user.email)
+        
+        
+        
         
         
       } else {

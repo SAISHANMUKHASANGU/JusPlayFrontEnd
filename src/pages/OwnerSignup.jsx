@@ -3,6 +3,7 @@ import { useState,useEffect } from 'react'
 import User from './user';
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
+import { userConsumer } from '../context/UserContext';
 
 
 let API_URL="https://jusplayserver-2.onrender.com/owners"
@@ -55,6 +56,7 @@ const Fieldset=styled.fieldset`
 
 function Owner() {
 
+   
     const[error,setError]=useState({
       email:"",
       username:null,
@@ -85,20 +87,7 @@ function Owner() {
         }
       };
 
-    const deleteUser=async (id)=>
-    {
-        try{
-            console.log("hi")
-            let response=await axios.delete(`${API_URL}/${id}`)
-            setUsers(users.filter((user)=>user.id!==id))  
-            fetchdata()
-
-        }
-        catch(error)
-        {
-            console.log("error deleting User", error);
-        }
-    }
+    
 
     const ChangeAttribute=(event)=>{
       event.preventDefault()
@@ -181,6 +170,7 @@ function Owner() {
       else{
         addUser()
         navigate("/ownerlogin");
+        
       }
       
     }
