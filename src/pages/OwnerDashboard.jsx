@@ -123,6 +123,16 @@ const OwnerDashboard =() => {
       usermail:User.email,
       
   })
+  const [editableturf,setEditable]=useState({
+    id:null,
+    name:"",
+    image:"",
+    type:"",
+    price:null,
+    location:"",
+    rating:null,
+    usermail:""
+  })
   const [newprice,setNewPrice]=useState("")
   // console.log("turfs");
   // console.log(turfs)
@@ -393,13 +403,24 @@ const OwnerDashboard =() => {
   }
 
   const handleEdit=(turf)=>{
+    console.log(turf)
     if(edit===true)
     {
       setEdit(false)
     }
     else{
       setEdit(true)
-
+      setEditable({
+        id:turf.id,
+        name:turf.name,
+        image:turf.image,
+        type:turf.type,
+        price:turf.price,
+        location:turf.location,
+        rating:turf.rating,
+        usermail:turf.usermail
+      })
+      
       
     }
   }
@@ -421,8 +442,14 @@ const OwnerDashboard =() => {
   }
 
 const handlechange=(e)=>{
-  console.log(e.target.value)
-  setEdit(e.target.value)
+  const { name, value } = e.target;
+    setEditable((prevData) => ({ ...prevData, [name]: value }));
+}
+
+const UpdateTurf=async()=>{
+    await axios.put("http://localhost:5236/api/Turfs/UpdateTurf",editableturf)
+    alert("The turf is updated")
+    setEdit(false)
 }
 
   
@@ -432,11 +459,11 @@ const handlechange=(e)=>{
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
       {edit&&(<TurfCard>
-        <TurfDetail>turf Name:<input type="text" /></TurfDetail>
-              <TurfDetail>turf Location:<input type="text" /></TurfDetail>
-              <TurfDetail>price for session:<input type="number" /></TurfDetail>
-              <TurfDetail>Sport:<input type="text" /></TurfDetail>
-              <Button onClick={()=>UpdateTurf(turf)} >submit</Button>
+        <TurfDetail>turf Name:<input type="text" value={editableturf.name} disabled="true"/></TurfDetail>
+              <TurfDetail>turf Location:<input type="text" value={editableturf.location} disabled="true"/></TurfDetail>
+              <TurfDetail>price for session:<input type="number" name="price" value={editableturf.price} onChange={handlechange}/></TurfDetail>
+              <TurfDetail>Sport:<input type="text" value={editableturf.type} disabled="true" /></TurfDetail>
+              <Button onClick={UpdateTurf} >submit</Button>
 
               
       </TurfCard>

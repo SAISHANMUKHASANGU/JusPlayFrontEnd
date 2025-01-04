@@ -457,10 +457,10 @@ function Book() {
 
         emailjs
             .send(
-                "service_2u331ik",
-                "template_qmq14xi",
+                "service_bnd3l6r",
+                "template_0yxofo",
                 templateParams,
-                "cCYei8t9dyHlqeW01"
+                "553L9zs8vGeF5-84R"
             )
             .then(
                 (response) => {
