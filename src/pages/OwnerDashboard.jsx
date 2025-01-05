@@ -320,6 +320,7 @@ const OwnerDashboard =() => {
         addTurf()
         alert("New turf is added")
         setError({name:null,type:null,price:null,location:null})
+        setRegisterTurf(false)
       }
       }
 
@@ -447,8 +448,8 @@ const gotobookings=()=>{
 
   return (
     <Div>
-      <Button onClick={logout}>logout</Button>
-      <Button2 onClick={gotobookings}>OverallBookings</Button2>
+      
+      {/* <Button2 onClick={gotobookings}>OverallBookings</Button2> */}
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
       {edit&&(<TurfCard>
@@ -620,6 +621,10 @@ const gotobookings=()=>{
         <Button type="submit">Submit</Button>
       </StyledForm>
       </FormWrapper>:""}
+      <div style={{display:"flex",justifyContent:"center"}}>
+      <Button onClick={logout}>logout</Button>
+      </div>
+      
     </DashboardWrapper>
     </Div>
   );
