@@ -93,6 +93,10 @@ const BackButton = styled.button`
   background-color: #6c757d;
   margin-top: 1rem;
   width:150px;
+  height:50px;
+  border:none;
+  border-radius:15px;
+  font-weight:bold;
   
   &:hover {
     background-color: #5a6268;
@@ -169,35 +173,26 @@ const fetchdata=async()=>{
       <Div>
         <h1 style={{textAlign:'center',color:'white'}}>MY BOOKINGS</h1>
         {bookings &&
-        (bookings.map((booking)=>(<BookingDetails>
-            <DetailHeading>Turf Name: {booking.name}</DetailHeading>
-            <DetailHeading>Booking Date: {booking.date}</DetailHeading>
-            <DetailHeading>Turf Location: {booking.location}</DetailHeading>
-            <DetailHeading>Shift: {booking.shift}</DetailHeading>
-            <CancelBut onClick={()=>Cancel(booking)}>Cancel</CancelBut>
-            {/* <form onSubmit={handleSubmit}>
-          <div className="rating">
-            <h3>Rate Us:</h3>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`star ${star <= rating ? "selected" : ""}`}
-                onClick={() => handleStarClick(star)}
-              >
-                ★
-              </span>
-            ))}
-          </div>
-          <div className="feedback">
-            <textarea
-              placeholder="Write your feedback here..."
-              value={feedback}
-              onChange={handleFeedbackChange}
-            ></textarea>
-          </div>
-          <button type="submit">Submit</button>
-        </form> */}
-          </BookingDetails>)))}
+        bookings.map((booking) =>
+          booking.date <= new Date().toISOString().split('T')[0] ? (
+            <BookingDetails key={booking.id}>
+              <DetailHeading>Booking Date: {booking.date}</DetailHeading>
+              <DetailHeading>Turf Name: {booking.name}</DetailHeading>
+              
+              <DetailHeading>Turf Location: {booking.location}</DetailHeading>
+              <DetailHeading>Shift: {booking.shift}</DetailHeading>
+            </BookingDetails>
+          ) : (
+            <BookingDetails key={booking.id}>
+              <DetailHeading>Booking Date: {booking.date}</DetailHeading>
+              <DetailHeading>Turf Name: {booking.name}</DetailHeading>
+              
+              <DetailHeading>Turf Location: {booking.location}</DetailHeading>
+              <DetailHeading>Shift: {booking.shift}</DetailHeading>
+              <CancelBut onClick={() => Cancel(booking)}>Cancel</CancelBut>
+            </BookingDetails>
+          )
+        )}
         <BackButton type="button" onClick={handleBack}>
           Back to Dashboard
         </BackButton>

@@ -8,51 +8,113 @@ import { userConsumer } from '../context/UserContext';
 
 let API_URL="https://jusplayserver-2.onrender.com/owners"
 
-const Div=styled.div`
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100vh;
+  background-image: url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 100px;
+`;
+
+const SignupForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 30px;
+  background-color: rgba(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 350px;
+
+  @media (max-width: 768px) {
+    
+    height: auto;
+    width:auto;
+  }
+
+  /* Media Query for mobile devices */
+  @media (max-width: 480px) {
+    height: auto;
+    width:auto
+    flex-direction: column;
+  }
   
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    gap:15px;
-    min-height:100vh;
-    background-image:url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
-    background-size:100% 100%;
-    background-repeat:no-repeat
-    `;
+  @media (max-width: 375px) {
+    height: auto;
+    width:auto
+    flex-direction: column;
+  }
+`;
 
-const Elediv=styled.div`
-  display:flex;
+const Title = styled.h1`
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+`;
+
+const Fieldset = styled.fieldset`
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+`;
+
+const Legend = styled.legend`
+  padding: 0 10px;
+  font-size: 18px;
+  color: #555;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`;
+
+const Label = styled.label`
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: #007bff;
+  }
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width:80px;
+
+  &:hover {
+    background-color: #218838;
+  }
   
-  flex-direction:column;
+`;
 
-`
-
-const Signupform=styled.form`
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    gap:15px;
-    background-color:#DAF7A6;
-    padding:5px;
-    border-radius:5px;
-    box-shadow:3px solid black;
-    min-height:250px
-    width:100px
-    `
-
-const Title=styled.h1`
-  
-`
-
-const Fieldset=styled.fieldset`
-  padding:5px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  
-`
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 15px;
+`;
 
 function Owner() {
 
@@ -228,61 +290,61 @@ function Owner() {
     <>
       <Div>
         
-        <div id="form">
+        
             
           
 
-            <Signupform onSubmit={handleSubmit}>
+            <SignupForm onSubmit={handleSubmit}>
             <Title>Sign Up</Title>
               <Fieldset>
                 
-                <legend>Mail Details: </legend>
-                <Elediv>
-                <label htmlFor="email">Email:</label>
-                <input type="Email" name='email' value={newuser.email} onChange={(e)=>setNewUser({...newuser,email:e.target.value})} placeholder='Email'/>
+                <Legend>Mail Details: </Legend>
+                <InputGroup>
+                <Label htmlFor="email">Email:</Label>
+                <Input type="Email" name='email' value={newuser.email} onChange={(e)=>setNewUser({...newuser,email:e.target.value})} placeholder='Email'/>
                 {error.email && (<div>
               
-                      <span>{error.email}</span>
+                      <ErrorMessage>{error.email}</ErrorMessage>
               
                   </div>
                 )}
-                </Elediv>
+                </InputGroup>
                
-                <Elediv>
-                  <label htmlFor="password">Password:</label>
-                  <input type={visibility?"text":"password"} name='password' value={newuser.password} onChange={(e)=>setNewUser({...newuser,password:e.target.value})} placeholder="Password"/>
-                  <button onClick={ChangeAttribute}>View</button>
-                </Elediv>
+                <InputGroup>
+                  <Label htmlFor="password">Password:</Label>
+                  <Input type={visibility?"text":"password"} name='password' value={newuser.password} onChange={(e)=>setNewUser({...newuser,password:e.target.value})} placeholder="Password"/>
+                  <Button onClick={ChangeAttribute}>View</Button>
+                </InputGroup>
                 {error.password && (<div>
               
-                     <span>{error.password}</span>
+                     <ErrorMessage>{error.password}</ErrorMessage>
               
                   </div>
                 )}
                 </Fieldset>
                 <Fieldset>
-                  <legend>Personal Info:</legend>
-                <Elediv>
-                <label htmlFor="username">Username:</label>
-                <input type="text" value={newuser.name} name='username' onChange={(e)=>setNewUser({...newuser,name:e.target.value})} placeholder="Username"/>
+                  <Legend>Personal Info:</Legend>
+                <InputGroup>
+                <Label htmlFor="username">Username:</Label>
+                <Input type="text" value={newuser.name} name='username' onChange={(e)=>setNewUser({...newuser,name:e.target.value})} placeholder="Username"/>
                 {error.username && (<div>
               
-                      <span>{error.username}</span>
+                      <ErrorMessage>{error.username}</ErrorMessage>
               
                    </div>
                 )}
-                </Elediv>
+                </InputGroup>
                 
                 </Fieldset>
                 
                 
                 
                 
-                <button type="submit">Submit</button>
-            </Signupform>
+                <Button type="submit">Submit</Button>
+            </SignupForm>
             
-        </div>
-        {editUser &&(<div>
+        
+        {/* {editUser &&(<div>
             <p>Editing form</p>
                 <form action="">
                 <input type="email" value={editUser.email} onChange={(e)=>setEditUser({...editUser,email:e.target.value})} placeholder='Email'/>
@@ -294,7 +356,7 @@ function Owner() {
                 </form>
                 
         </div>)
-        }
+        } */}
         {/* <div> 
         {users.map((user) => (
           <User

@@ -140,7 +140,7 @@ const UserHeader = () => {
 
         {/* Logo and Title */}
         <LogoContainer>
-          <Logo src="/logo.webp" alt="JusPlay Logo" />
+          <Logo src="./images/logo.jpg" alt="JusPlay Logo" />
           <LogoName>JusPlay</LogoName>
         </LogoContainer>
       </HeaderContainer>
@@ -157,15 +157,35 @@ const UserHeader = () => {
           <NavItem>
             <NavLinkStyled
               to="/"
-              onClick={() => setMenuOpen(false)}
+              onClick={() => setMenuOpen(false) }
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
               Home
             </NavLinkStyled>
           </NavItem>
+          
           <NavItem>
             <NavLinkStyled
-              to="/userprofile"
+              to="/products"
+              onClick={() => setMenuOpen(false) }
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Products
+            </NavLinkStyled>
+          </NavItem>
+          
+          <NavItem>
+            <NavLinkStyled
+              to="/features"
+              onClick={() => setMenuOpen(false) }
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              Features
+            </NavLinkStyled>
+          </NavItem>
+          <NavItem>
+            <NavLinkStyled
+              to="/user"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
@@ -181,15 +201,7 @@ const UserHeader = () => {
               Dashboard
             </NavLinkStyled>
           </NavItem>
-          <NavItem>
-            <NavLinkStyled
-              to="/services"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Services
-            </NavLinkStyled>
-          </NavItem>
+          
           <NavItem>
             <NavLinkStyled
               to="/bookings"
@@ -199,24 +211,35 @@ const UserHeader = () => {
               Bookings
             </NavLinkStyled>
           </NavItem>
-          <NavItem>
+          {/* <NavItem>
             <NavLinkStyled
-              to="/offers"
+              to="/owner"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
-              Offers
+              OwnerSignup
             </NavLinkStyled>
           </NavItem>
           <NavItem>
             <NavLinkStyled
-              to="/logout"
+              to="/ownerlogin"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
-              Logout
+              OwnerLogin
+            </NavLinkStyled>
+          </NavItem> */}
+          <NavItem>
+            <NavLinkStyled
+              to="/ownerdashboard"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+            >
+              OwnerDashboard
             </NavLinkStyled>
           </NavItem>
+          
+          
         </NavList>
       </NavMenu>
     </HeaderWrapper>

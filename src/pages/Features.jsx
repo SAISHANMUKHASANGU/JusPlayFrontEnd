@@ -121,7 +121,7 @@ function Features() {
     {
       icon: "🏆",
       title: "Multiple Sports Options",
-      description: "Choose from a variety of sports like football, cricket, tennis, and more.",
+      description: "Choose from a variety of sports like football, cricket, badminton.",
     },
     {
       icon: "⏰",

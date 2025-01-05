@@ -120,13 +120,14 @@ const BackButton = styled(Button)`
     background-color: #5a6268;
   }
 `;
-
+let selected;
 let user;
 let favorite;
 let filtered;
 
 // User Profile Component
 const User = () => {
+  const [loogedinuser,setLoggedinUser]=useState(localStorage.getItem("user"))
   const [userData, setUserData] = useState({
     username: "",
 
@@ -139,21 +140,30 @@ const User = () => {
   // Load user data from local storage or server (mocked for now)
   useEffect(() => {
 
+    getdata()
     
-    setUserData({username:user,favoriteGame:favorite});
   }, []);
+
+  const getdata=async()=>{
+    let response =await axios.get("http://localhost:5236/api/JusPlay")
+    let data=response.data
+    selected=data.find((user)=>user.email===loogedinuser)
+    let User=selected
+    console.log(User)
+    user=User.name
+    favorite=User.favoriteGame
+    console.log(user)
+    console.log(favorite)
+    setUserData({username:user,favoriteGame:favorite});
+  }
   
-  console.log(userData.username)
-  console.log(userData.favoriteGame)
+ 
 
   const location=useLocation();
-      const {state}=location;
-      let User=state
       
       
-      user=User.name
-      favorite=User.favoriteGame
-  console.log(User)
+      
+      
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -183,11 +193,11 @@ const User = () => {
     console.log(User)
 
     const final={
-      id:User.id,
-      email:User.email,
+      id:selected.id,
+      email:selected.email,
       name:userData.username,
       favoriteGame:userData.favoriteGame,
-      password:User.password,
+      password:selected.password,
       
     }
 

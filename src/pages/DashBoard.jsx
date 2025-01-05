@@ -135,7 +135,7 @@ const Dashboard =() => {
     
     let selected=data.find((user)=>user.email===User.email)
     console.log(selected)
-    navigate("/user",{state:selected})
+    navigate("/user")
   }
 
   const handleBooking = (turf) => {
@@ -174,7 +174,7 @@ const Dashboard =() => {
     let response=await axios.get("http://localhost:5236/api/JusPlay")//bookings get url
     let data=response.data
     let selected=data.find((user)=>user.email===useremail)
-    navigate("/bookings",{state:selected})
+    navigate("/bookings")
 
   }
   
@@ -188,8 +188,8 @@ const Dashboard =() => {
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
         
       <ResponsiveDiv>
-      <ProfileButton onClick={goto}>Profile</ProfileButton>
-      <BookingsButton onClick={bookings}>Bookings</BookingsButton>
+      {/* <ProfileButton onClick={goto}>Profile</ProfileButton>
+      <BookingsButton onClick={bookings}>Bookings</BookingsButton> */}
       <LogoutButton onClick={logout}>Logout</LogoutButton>
     </ResponsiveDiv>
         
@@ -401,7 +401,15 @@ const Filters = styled.section`
     margin-bottom: 10px;
   }
 
-  input,
+  input
+  {
+    width: 98.5%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  ,
   select {
     width: 100%;
     padding: 8px;

@@ -13,6 +13,10 @@ function Book() {
     const user = state.user.User;
     console.log(state)
 
+    const handleBack = () => {
+        window.location.href = "/dashboard";
+      };
+
     const [filters, setFilters] = useState({
         
         turfid: turf.id,
@@ -96,6 +100,19 @@ function Book() {
     };
 
     // Styled Components
+    const BackButton = styled.button`
+  background-color: #6c757d;
+  margin-top: 1rem;
+  width:150px;
+  height:50px;
+  border:none;
+  border-radius:15px;
+  font-weight:bold;
+  padding:10px;
+  &:hover {
+    background-color: #5a6268;
+  }
+`
     const PageContainer = styled.div`
         height: 100vh;
         
@@ -225,6 +242,9 @@ function Book() {
                 </SelectField>
                 <SubmitButton type="submit">Submit</SubmitButton>
             </FormContainer>
+            <BackButton type="button" onClick={handleBack}>
+          Back to Dashboard
+        </BackButton>
             {/* <Footer>&copy; 2024 JusPlay. All rights reserved.</Footer> */}
         </PageContainer>
     );

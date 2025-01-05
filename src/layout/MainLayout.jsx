@@ -3,13 +3,13 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import UserHeader from '../components/Dashboardheader'
 import Dashboard from '../pages/DashBoard'
+import { userConsumer } from '../context/UserContext'
 
 function MainLayout({children}) {
-  // const islogin=localStorage.getItem("login")
-  // console.log(islogin)
+  const {login}=userConsumer()
   return (
     <>
-       <Header/> 
+       {login==="true"?<UserHeader/>:<Header/> }
         {children}
         <Footer/>
     </>

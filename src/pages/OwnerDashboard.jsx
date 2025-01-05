@@ -120,7 +120,7 @@ const OwnerDashboard =() => {
     name: "",
       image: `./images/turf${Math.floor(Math.random() * 7) + 1}.jpg`,
       type: "Cricket",
-      price: null,
+      price:null,
       location: "",
       rating:parseInt(Math.floor(Math.random() * 5) + 1),
       usermail:localStorage.getItem("loggedinowner"),
@@ -330,7 +330,7 @@ const OwnerDashboard =() => {
           let response=await axios.get("http://localhost:5236/api/Turfs")
           const data=response.data
     // console.log(response.data)
-          const filtered=data.filter((element)=>element.usermail===User.email)
+          const filtered=data.filter((element)=>element.usermail===localStorage.getItem("loggedinowner"))
     // console.log(filtered)
           ownerturfs=filtered;
     // console.log(ownerturfs)
