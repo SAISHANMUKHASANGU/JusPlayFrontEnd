@@ -137,14 +137,14 @@ export const LogoutButton = styled.button`
 const UserHeader = () => {
   const {login,setLogin}=userConsumer()
   const navigate=useNavigate()
-  const logout=async ()=>{
-    navigate("/Login")
-    setLogin("false")
-    console.log(login)
+  // const logout=async ()=>{
+  //   navigate("/Login")
+  //   setLogin("false")
+  //   console.log(login)
 
 
-    localStorage.setItem('logins',false)
-  }
+  //   localStorage.setItem('logins',false)
+  // }
 
   
 
@@ -168,7 +168,7 @@ const UserHeader = () => {
           <span></span>
           <span></span>
         </Hamburger>
-        {login==="true"&&<LogoutButton onClick={logout}>Logout</LogoutButton>}
+        {/* {login==="true"&&<LogoutButton onClick={logout}>Logout</LogoutButton>} */}
 
         {/* Logo and Title */}
         <LogoContainer>
