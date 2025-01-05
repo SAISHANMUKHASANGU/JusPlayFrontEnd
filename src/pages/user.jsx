@@ -185,7 +185,7 @@ const User = () => {
   };
 
   const handleSave = async () => {
-    
+    const nametype = /^[a-zA-Z]+$/;
     setIsEditing(false);
     const response = await axios.get("http://localhost:5236/api/JusPlay");
     const data=response.data;
@@ -193,22 +193,34 @@ const User = () => {
     filtered=data.find((user)=>user.email===User.email)
 
     console.log(User)
-
-    const final={
-      id:selected.id,
-      email:selected.email,
-      name:userData.username,
-      favoriteGame:userData.favoriteGame,
-      password:userData.password,
+    if(userData.password.length<5)
+    {
+      alert("password can't be less than 5 characters")
+    }
+    else if(!nametype.test(userData.name))
+    {
+      alert("Username should be in characters")
+    }
+    else
+    {
+      const final={
+        id:selected.id,
+        email:selected.email,
+        name:userData.username,
+        favoriteGame:userData.favoriteGame,
+        password:userData.password,
+        
+      }
+  
+      console.log(final)
+  
       
+  
+      await axios.put("http://localhost:5236/api/JusPlay/updateUser",final)
+  
     }
 
-    console.log(final)
-
     
-
-    await axios.put("http://localhost:5236/api/JusPlay/updateUser",final)
-
 
 
     

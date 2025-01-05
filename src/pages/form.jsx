@@ -207,7 +207,7 @@ function Form() {
       return;
     }
 
-    if (newuser.favorite_game === "") {
+    if (newuser.favoriteGame === "") {
       setError({ favorite_game: "Favorite Game can't be Empty" });
       return;
     }
