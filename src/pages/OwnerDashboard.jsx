@@ -262,7 +262,7 @@ const OwnerDashboard =() => {
       
       let resdata=response.data
       console.log(resdata)
-      let filtered=resdata.filter((turf)=>turf.name===newTurf.name)
+      let filtered=resdata.filter((turf)=>turf.name.toLowerCase()===newTurf.name.toLowerCase())
       if(filtered.length>0)
       {
         let errormessage="Turf already exists"
@@ -462,7 +462,7 @@ const gotobookings=()=>{
       </TurfCard>
         )}
         
-        {turfs&&
+        {turfs?
         (turfs.map((turf)=>(<TurfCard>
   <TurfDetail>Turf Name: {turf.name} </TurfDetail>
   <TurfDetail>Turf Location: {turf.location} </TurfDetail>
@@ -474,7 +474,7 @@ const gotobookings=()=>{
   <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
   </div>
   
-</TurfCard>)))}
+</TurfCard>))):<p>Loading....</p>}
       {/* <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
         
@@ -576,7 +576,7 @@ const gotobookings=()=>{
             <option value="Cricket" defaultChecked>Cricket</option>
             <option value="Football">Football</option>
             <option value="Badminton">Badminton</option>
-          </select>
+        </select>
         {/* <Input
           type="text"
           name="type"

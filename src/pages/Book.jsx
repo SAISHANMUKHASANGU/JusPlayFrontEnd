@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 
 
-
+let user;
 function Book() {
     const [error,setError]=useState(false)
     const [errormessage,setErrormessage]=useState("")
@@ -18,6 +18,16 @@ function Book() {
     const handleBack = () => {
         window.location.href = "/dashboard";
       };
+    
+    useEffect(()=>{
+        const fetchdata=async()=>{
+            let response=await axios.get("http://localhost:5236/api/JusPlay")
+            let data=response.data;
+            let selected=data.find((user)=>user.email===localStorage.getItem("user"))
+            user=selected;
+        }
+        fetchdata()
+    },[])
 
     const [filters, setFilters] = useState({
         

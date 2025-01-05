@@ -119,10 +119,13 @@ useEffect(()=>{
 
 const fetchdata=async()=>{
   const fetchedresponse=await axios.get("http://localhost:5236/api/Bookings")
-  const fetcheddata=fetchedresponse.data.filter((element)=>element.mail===localStorage.getItem("user"))
+  console.log(fetchedresponse)
+  let fetched=fetchedresponse.data
+  console.log(fetched)
+  const fetcheddata=fetched.filter((element)=>element.mail===localStorage.getItem("user"))
   console.log(fetcheddata)
-  let response=await axios.get("http://localhost:5236/api/Bookings")
-  console.log(response.data)
+  // let response=await axios.get("http://localhost:5236/api/Bookings")
+  // console.log(response.data)
   
   setBookings(fetcheddata)
   
@@ -174,17 +177,25 @@ const fetchdata=async()=>{
         <h1 style={{textAlign:'center',color:'white'}}>MY BOOKINGS</h1>
         {bookings ? (
   bookings
-    .filter((booking) => booking.date <= new Date().toISOString().split('T')[0])
-    .map((booking) => (
-      <BookingDetails key={booking.id}>
-        <DetailHeading>Booking Date: {booking.date}</DetailHeading>
-        <DetailHeading>Turf Name: {booking.name}</DetailHeading>
-        <DetailHeading>Turf Location: {booking.location}</DetailHeading>
-        <DetailHeading>Shift: {booking.shift}</DetailHeading>
-      </BookingDetails>
-    ))
+  .map((booking) =>booking.date<=new Date().toISOString().split('T')[0]?(
+    <BookingDetails key={booking.id}>
+      <DetailHeading>Booking Date: {booking.date}</DetailHeading>
+      <DetailHeading>Turf Name: {booking.name}</DetailHeading>
+      <DetailHeading>Turf Location: {booking.location}</DetailHeading>
+      <DetailHeading>Shift: {booking.shift}</DetailHeading>
+      
+    </BookingDetails>
+  ): (
+  <BookingDetails key={booking.id}>
+    <DetailHeading>Booking Date: {booking.date}</DetailHeading>
+    <DetailHeading>Turf Name: {booking.name}</DetailHeading>
+    <DetailHeading>Turf Location: {booking.location}</DetailHeading>
+    <DetailHeading>Shift: {booking.shift}</DetailHeading>
+    <CancelBut onClick={()=>Cancel(booking)}>Cancel</CancelBut>
+  </BookingDetails>
+  ))
 ) : (
-  <p>Loading...</p> // Fallback when bookings is null/undefined
+   <p>No bookings</p>// Fallback when bookings is null/undefined
 )}
         <BackButton type="button" onClick={handleBack}>
           Back to Dashboard

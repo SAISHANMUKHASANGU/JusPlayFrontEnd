@@ -111,6 +111,7 @@ const Dashboard =() => {
     setFilters({ ...filters, [name]: value });
     setError(false)
     setFilteredTurfs([])
+    setSubmited(false)
   };
 
  
@@ -168,6 +169,7 @@ const Dashboard =() => {
       let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.toLowerCase()===filters.location.toLowerCase())
       console.log(filteredturf)
       setFilteredTurfs(filteredturf)
+      setSubmited(true)
     }
   }
 
@@ -190,6 +192,8 @@ const Dashboard =() => {
     navigate("/bookings")
 
   }
+
+  const [submited,setSubmited]=useState(false)
   
 
   
@@ -247,8 +251,9 @@ const Dashboard =() => {
         <StyledButton onClick={Filter}>Submit</StyledButton>
       </Filters>
 
-      <Turfs>
+      {submited?(<Turfs>
         <h2>Available Turfs</h2>
+        <br />
         <TurfsGrid>
           {filteredturfs.length>0?
           (filteredturfs.map((turf) => (
@@ -264,7 +269,8 @@ const Dashboard =() => {
           <p>No available turfs</p>}
           
         </TurfsGrid>
-      </Turfs>
+      </Turfs>):<p>Loading...</p>
+      }
 
       {/* <Promotions>
         <h2>Promotions & Discounts</h2>

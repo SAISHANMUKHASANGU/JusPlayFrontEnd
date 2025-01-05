@@ -16,6 +16,17 @@ const FeaturesPage = styled.div`
   background-size:100% 100%;
   background-repeat:no-repeat;
   padding:60px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    padding:100px;
+    align-items:center;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+    align-items:center;
+  }
   `;
 
 
