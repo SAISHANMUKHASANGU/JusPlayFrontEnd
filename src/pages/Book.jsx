@@ -56,7 +56,9 @@ function Book() {
             (book) =>
                 book.type === turf.type &&
                 book.shift === filters.shift &&
-                book.date === filters.date
+                book.date === filters.date&&
+                book.name===filters.name
+
         );
 
         if (status) {
@@ -166,7 +168,7 @@ function Book() {
     const Title = styled.h1`
         font-size: 2.5rem;
         margin-bottom: 20px;
-        color: black;
+        color: white;
         text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
         @media (max-width: 768px) {
     padding: 20px;
