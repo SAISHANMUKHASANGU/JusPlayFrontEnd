@@ -43,6 +43,8 @@ const Dashboard =() => {
   const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
   
   // const [UserID,setUserID]=useState(User.id);
+  const [error,setError]=useState(false)
+  const [errormessage,setErrormessage]=useState("")
   const [Username,setUsername]=useState(null);
 
   const [availableTurfs, setAvailableTurfs] = useState();
@@ -76,7 +78,7 @@ const Dashboard =() => {
     try {
       const response = await axios.get("http://localhost:5236/api/JusPlay");
       const users = response.data;
-      console.log(users)
+      
 
       const user = users.find(
         (user) => user.email ===localStorage.getItem("user") 
@@ -107,6 +109,8 @@ const Dashboard =() => {
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
+    setError(false)
+    setFilteredTurfs([])
   };
 
  
@@ -139,28 +143,37 @@ const Dashboard =() => {
   }
 
   const handleBooking = (turf) => {
-    navigate("/book",{state:{turf:{turf},user:{User}}});
+    localStorage.setItem("currentturf",JSON.stringify(turf))
+    console.log(localStorage.getItem("currentturf"))
+    navigate("/book");
   };
 
-  const function1=(data)=>{
-    
-    console.log(availableTurfs)
-    console.log(filters.location)
-    console.log(filters.type)
-    let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.toLowerCase()===filters.location.toLowerCase())
-    console.log(filteredturf)
-    setFilteredTurfs(filteredturf)
+  const validation=async()=>{
+    if(filters.location==="")
+    {
+      setError(true)
+      setErrormessage("Location can't be empty")
+    }
+    else
+    {
+      console.log("hello")
+      let avaiTurfs=await axios.get("http://localhost:5236/api/Turfs")
+      let data=avaiTurfs.data
+      console.log(data)
+      
+      setAvailableTurfs(data)
+      console.log(availableTurfs)
+      console.log(filters.location)
+      console.log(filters.type)
+      let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.toLowerCase()===filters.location.toLowerCase())
+      console.log(filteredturf)
+      setFilteredTurfs(filteredturf)
+    }
   }
 
   const Filter=async()=>{
-    console.log("hello")
-    let avaiTurfs=await axios.get("http://localhost:5236/api/Turfs")
-    let data=avaiTurfs.data
-    console.log(data)
-    let data1=data
-    setAvailableTurfs(data)
-    function1(data1)
-    
+    validation()
+   
     
     
     
@@ -219,6 +232,8 @@ const Dashboard =() => {
           <input type="text" name="location" value={filters.location} onChange={handleFilterChange} />
         </label>
         
+        {error&&<p style={{color:"red"}}>{errormessage}</p>}
+        <br />
         
         <label>
           Turf Type:

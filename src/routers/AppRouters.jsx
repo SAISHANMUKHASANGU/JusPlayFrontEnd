@@ -10,7 +10,7 @@ import Products from "../pages/Products"
 import SignIn from "../pages/Login"
 import Dashboard from "../pages/DashBoard"
 import User from "../pages/user"
-
+import NotFound from "../pages/NotFound"
 import Book from "../pages/Book"
 import Features from "../pages/Features"
 import UserBookings from "../pages/UserBookings"
@@ -18,6 +18,7 @@ import Owner from "../pages/OwnerSignup"
 import OwnerSignIn from "../pages/OwnerLogin"
 import OwnerDashboard from "../pages/OwnerDashboard"
 import { userConsumer } from "../context/UserContext"
+import Checkingbookings from "../pages/Checkingbookings"
 
 let islogin="false"
 function AppRouters() {
@@ -34,7 +35,7 @@ function AppRouters() {
           <Router>
           <MainLayout>
           <Routes>
-          <Route path="/" element={<Main/>}/>
+          <Route path="/" element={login==="true"?<Navigate to="/dashboard"/>:<Main/>}/>
           <Route path="/signup" element={<Form/>}/>
           <Route path="/Products" element={<Products/>}/>
           <Route path="/login" element={<SignIn/>}/>
@@ -46,8 +47,11 @@ function AppRouters() {
           <Route path="/owner" element={<Owner/>}/>
           <Route path="/ownerlogin" element={<OwnerSignIn/>}/>
           <Route path="/ownerdashboard" element={ownerlogin==="true"?<OwnerDashboard/>:<Navigate to="/ownerlogin"/>}/>
+          <Route path="/checkingbookings" element={ownerlogin==="true"?<Checkingbookings/>:<Navigate to="/ownerlogin"/>}/>
+          <Route path="*" element={<NotFound />} />
           </Routes>
       </MainLayout>
+          
       </Router>
     </>
             

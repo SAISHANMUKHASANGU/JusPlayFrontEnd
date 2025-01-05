@@ -7,10 +7,12 @@ import emailjs from '@emailjs/browser';
 
 
 function Book() {
+    const [error,setError]=useState(false)
+    const [errormessage,setErrormessage]=useState("")
     const location = useLocation();
     const { state } = location;
-    const turf = state.turf.turf;
-    const user = state.user.User;
+    const turf = JSON.parse(localStorage.getItem("currentturf"));
+    // const user = state.user.User;
     console.log(state)
 
     const handleBack = () => {
@@ -26,17 +28,17 @@ function Book() {
         type: turf.type,
         shift: "Morning",
         date: "",
-        mail: user.email, // Dynamic user email
+        mail: localStorage.getItem("user"), // Dynamic user email
     });
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        // let response = await axios.get("http://localhost:5236/api/Turfs");
-        // let data = response.data;
-        // let selected = data.find((turfs) => turfs.id === turf.id);
-        // console.log(selected)
-        let booking = await axios.get("http://localhost:5236/api/Bookings");
+    const validate=async()=>{
+        if(filters.date==="")
+        {
+            setError(true)
+            setErrormessage("Date can't be empty");
+        }
+        else{
+            let booking = await axios.get("http://localhost:5236/api/Bookings");
         let bookings=booking.data
         console.log(bookings)
 
@@ -66,6 +68,18 @@ function Book() {
         // await axios.put(`${API_URL}/${selectedUser.id}`, selectedUser);
 
         sendConfirmationEmail();
+        }
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // let response = await axios.get("http://localhost:5236/api/Turfs");
+        // let data = response.data;
+        // let selected = data.find((turfs) => turfs.id === turf.id);
+        // console.log(selected)
+        validate()
+        
     };
 
     const sendConfirmationEmail = () => {
@@ -295,14 +309,17 @@ function Book() {
                     <InputField
                     type="date"
                     value={filters.date}
+                    
                     onChange={(e) =>
-                        setFilters((prevdata) => ({ ...prevdata, date: e.target.value }))
+                        setFilters((prevdata) => ({ ...prevdata, date: e.target.value }),
+                        setError(false))
                     }
                     min={new Date().toISOString().split('T')[0]}
                     max={new Date(new Date().setDate(new Date().getDate() + 3))
                         .toISOString()
                         .split('T')[0]}
                 />
+                {error&&<p>{errormessage}</p>}
                 </div>
                 <div><p style={{textAlign:"left"}}>Shift:</p>
                 <SelectField

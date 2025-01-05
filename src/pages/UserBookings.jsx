@@ -104,7 +104,7 @@ const BackButton = styled.button`
 `
 
 const [book,setBook]=useState("")
-const [bookings,setBookings]=useState([])
+const [bookings,setBookings]=useState(null)
 console.log(bookings)
 
 useEffect(() => {
@@ -172,27 +172,20 @@ const fetchdata=async()=>{
     <>
       <Div>
         <h1 style={{textAlign:'center',color:'white'}}>MY BOOKINGS</h1>
-        {bookings &&
-        bookings.map((booking) =>
-          booking.date <= new Date().toISOString().split('T')[0] ? (
-            <BookingDetails key={booking.id}>
-              <DetailHeading>Booking Date: {booking.date}</DetailHeading>
-              <DetailHeading>Turf Name: {booking.name}</DetailHeading>
-              
-              <DetailHeading>Turf Location: {booking.location}</DetailHeading>
-              <DetailHeading>Shift: {booking.shift}</DetailHeading>
-            </BookingDetails>
-          ) : (
-            <BookingDetails key={booking.id}>
-              <DetailHeading>Booking Date: {booking.date}</DetailHeading>
-              <DetailHeading>Turf Name: {booking.name}</DetailHeading>
-              
-              <DetailHeading>Turf Location: {booking.location}</DetailHeading>
-              <DetailHeading>Shift: {booking.shift}</DetailHeading>
-              <CancelBut onClick={() => Cancel(booking)}>Cancel</CancelBut>
-            </BookingDetails>
-          )
-        )}
+        {bookings ? (
+  bookings
+    .filter((booking) => booking.date <= new Date().toISOString().split('T')[0])
+    .map((booking) => (
+      <BookingDetails key={booking.id}>
+        <DetailHeading>Booking Date: {booking.date}</DetailHeading>
+        <DetailHeading>Turf Name: {booking.name}</DetailHeading>
+        <DetailHeading>Turf Location: {booking.location}</DetailHeading>
+        <DetailHeading>Shift: {booking.shift}</DetailHeading>
+      </BookingDetails>
+    ))
+) : (
+  <p>Loading...</p> // Fallback when bookings is null/undefined
+)}
         <BackButton type="button" onClick={handleBack}>
           Back to Dashboard
         </BackButton>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { userConsumer } from "../context/UserContext";
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -116,7 +117,37 @@ const NavLinkStyled = styled(NavLink)`
   }
 `;
 
+export const LogoutButton = styled.button`
+  background-color: #f5f5f5;
+  color: #333;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #e0e0e0;
+    color: #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
 const UserHeader = () => {
+  const {login,setLogin}=userConsumer()
+  const navigate=useNavigate()
+  const logout=async ()=>{
+    navigate("/Login")
+    setLogin("false")
+    console.log(login)
+
+
+    localStorage.setItem('logins',false)
+  }
+
+  
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -137,6 +168,7 @@ const UserHeader = () => {
           <span></span>
           <span></span>
         </Hamburger>
+        {login==="true"&&<LogoutButton onClick={logout}>Logout</LogoutButton>}
 
         {/* Logo and Title */}
         <LogoContainer>
@@ -174,7 +206,7 @@ const UserHeader = () => {
             </NavLinkStyled>
           </NavItem>
           
-          <NavItem>
+          {/* <NavItem>
             <NavLinkStyled
               to="/features"
               onClick={() => setMenuOpen(false) }
@@ -182,7 +214,7 @@ const UserHeader = () => {
             >
               Features
             </NavLinkStyled>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLinkStyled
               to="/user"

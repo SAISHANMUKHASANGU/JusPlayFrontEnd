@@ -118,7 +118,7 @@ const Sidebar = styled.nav`
   box-shadow: -4px 0 6px rgba(0, 0, 0, 0.3);
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(100%)")};
   transition: transform 0.3s ease-in-out;
-  z-index: 999;
+  z-index: 1000;
 
   ul {
     list-style: none;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { userConsumer } from "../context/UserContext";
 
 let API_URL="https://jusplayserver-2.onrender.com/users"
 
@@ -127,6 +128,7 @@ let filtered;
 
 // User Profile Component
 const User = () => {
+  const {login,setLogin}=userConsumer()
   const [loogedinuser,setLoggedinUser]=useState(localStorage.getItem("user"))
   const [userData, setUserData] = useState({
     username: "",
@@ -214,8 +216,14 @@ const User = () => {
   const navigate=useNavigate()
   const handleDelete =async ()=>{
     console.log(User)
-    await axios.delete(`http://localhost:5236/api/JusPlay/DeleteUser/${User.id}`)
+    await axios.delete(`http://localhost:5236/api/JusPlay/DeleteUser/${selected.id}`)
+    setLogin("false")
+    localStorage.removeItem("user")
+    
+    
+    
     navigate("/Login")
+    
 
   }
 

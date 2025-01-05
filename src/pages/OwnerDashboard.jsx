@@ -211,7 +211,7 @@ const OwnerDashboard =() => {
   const logout=async ()=>{
     navigate("/ownerlogin")
     setOwnerlogin("false")
-    localStorage.setItem("ownerlogins",)
+    
 
     
   }
@@ -439,11 +439,16 @@ const UpdateTurf=async()=>{
     setEdit(false)
 }
 
+const gotobookings=()=>{
+  navigate("/checkingbookings")
+}
+
   
 
   return (
     <Div>
       <Button onClick={logout}>logout</Button>
+      <Button2 onClick={gotobookings}>OverallBookings</Button2>
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
       {edit&&(<TurfCard>
@@ -805,6 +810,24 @@ const Button = styled.button`
   font-size: 14px;
   cursor: pointer;
   width:100px;
+  transition: background-color 0.2s, transform 0.2s;
+  
+
+  
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+const Button2 = styled.button`
+  background-color:rgb(12, 69, 201);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin:5px;
+  font-size: 14px;
+  cursor: pointer;
+  width:auto;
   transition: background-color 0.2s, transform 0.2s;
   
 
