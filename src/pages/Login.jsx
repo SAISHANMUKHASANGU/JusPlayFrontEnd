@@ -26,9 +26,10 @@ const SignInContainer = styled.div`
   max-width: 400px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #f4f4f4;
+  background-color: rgba(24,182,218,0.1);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter:blur(50px);
 
   @media (max-width: 768px) {
     
@@ -61,7 +62,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 93%;
   padding: 0.75rem;
   font-size: 1rem;
   border-radius: 4px;
@@ -170,6 +171,7 @@ const SignIn = () => {
     <Div>
     <SignInContainer>
       <h2>Sign In</h2>
+      <br />
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="email">Email:</Label>

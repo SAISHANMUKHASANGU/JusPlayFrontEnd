@@ -165,7 +165,7 @@ function Owner() {
 
     const validation=async()=>{
       setError(null)
-      const emailtype=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailtype=/^[^\s@]+@gmail+\.com/;
       const nametype=/^[a-zA-Z]+$/;
 
       const filtered=users.filter((user)=>user.email===newuser.email)
@@ -295,7 +295,7 @@ function Owner() {
           
 
             <SignupForm onSubmit={handleSubmit}>
-            <Title>Sign Up</Title>
+            <Title>Owner Sign Up</Title>
               <Fieldset>
                 
                 <Legend>Mail Details: </Legend>

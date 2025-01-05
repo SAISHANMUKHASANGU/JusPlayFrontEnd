@@ -23,10 +23,11 @@ const SignupForm = styled.form`
   flex-direction: column;
   gap: 15px;
   padding: 30px;
-  background-color: rgba(255, 255, 255);
+  background-color: rgba(24,182,218,0.1);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   width: 350px;
+  backdrop-filter:blur(50px);
 
   @media (max-width: 768px) {
     
@@ -155,7 +156,7 @@ function Form() {
 
   const validation = async () => {
     setError(null);
-    const emailtype = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailtype = /^[^\s@]+@gmail.com/;
     const nametype = /^[a-zA-Z]+$/;
 
     const filtered = users.filter((user) => user.email === newuser.email);

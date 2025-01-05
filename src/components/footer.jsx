@@ -69,7 +69,9 @@ const FooterDesc = styled.p`
 `;
 
 const FooterLinks = styled.div`
-  flex: 1;
+  display:flex;
+  flex-direction:column;
+  align-items:center
   min-width: 250px;
   text-align: center;
 
@@ -84,12 +86,16 @@ const FooterLinks = styled.div`
 `;
 
 const FooterLinksTitle = styled.h3`
+  text-align:center;
   font-size: 1.5rem;
   margin-bottom: 15px;
   color: #ffcc00;
 `;
 
 const LinksList = styled.ul`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   list-style: none;
   padding: 0;
 `;
@@ -227,7 +233,7 @@ function Footer() {
         </FooterSocials>
       </FooterContainer>
 
-      <FooterBottom>&copy; 2024 JusPlay. All Rights Reserved.</FooterBottom>
+      <FooterBottom>&copy; 2025 JusPlay. All Rights Reserved.</FooterBottom>
     </FooterWrapper>
   );
 }

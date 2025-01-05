@@ -114,7 +114,7 @@ function Book() {
   }
 `
     const PageContainer = styled.div`
-        height: 100vh;
+       
         
         display: flex;
         flex-direction: column;
@@ -127,6 +127,16 @@ function Book() {
         text-align: center;
         padding: 20px;
         box-sizing: border-box;
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 100%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
     `;
 
     const Title = styled.h1`
@@ -134,6 +144,16 @@ function Book() {
         margin-bottom: 20px;
         color: black;
         text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
     `;
 
     const FormContainer = styled.form`
@@ -144,10 +164,23 @@ function Book() {
         width: 100%;
         margin: 0 auto;
         padding: 20px;
+        color:red;
         background-color: white;
         border: 2px solid #007bff;
         border-radius: 12px;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
+        
     `;
 
     const InputField = styled.input`
@@ -166,6 +199,17 @@ function Book() {
         &:read-only {
             background-color: #f9f9f9;
         }
+
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
     `;
 
     const SelectField = styled.select`
@@ -181,6 +225,16 @@ function Book() {
             border-color: #007bff;
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
         }
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
     `;
 
     const SubmitButton = styled.button`
@@ -201,6 +255,17 @@ function Book() {
             outline: none;
             box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
         }
+
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
     `;
 
     const Footer = styled.footer`
@@ -210,15 +275,24 @@ function Book() {
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     `;
 
+    const Label = styled.label`
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+`;
+
     return (
         <PageContainer>
             <Title>Booking Form</Title>
             <FormContainer onSubmit={handleSubmit}>
-                <InputField type="text" value={turf.name} readOnly />
-                <InputField type="number" value={turf.price} readOnly />
-                <InputField type="text" value={turf.location} readOnly />
-                <InputField type="text" value={turf.type} readOnly />
-                <InputField
+                <div><p style={{textAlign:"left"}}>Turf Name:</p><InputField type="text" value={turf.name} readOnly /></div>
+                
+                <div><p style={{textAlign:"left"}}>Turf Price:</p><InputField type="number" value={turf.price} readOnly /></div>
+                
+                <div ><p style={{textAlign:"left"}}>Turf Location:</p><InputField type="text" value={turf.location} readOnly /></div>
+                <div><p style={{textAlign:"left"}}>Sport:</p><InputField type="text" value={turf.type} readOnly /></div>
+                <div ><p style={{textAlign:"left"}}>Date of Booking:</p>
+                    <InputField
                     type="date"
                     value={filters.date}
                     onChange={(e) =>
@@ -229,6 +303,8 @@ function Book() {
                         .toISOString()
                         .split('T')[0]}
                 />
+                </div>
+                <div><p style={{textAlign:"left"}}>Shift:</p>
                 <SelectField
                     name="shift"
                     value={filters.shift}
@@ -240,6 +316,7 @@ function Book() {
                     <option value="Afternoon">Afternoon</option>
                     <option value="Evening">Evening</option>
                 </SelectField>
+                </div>
                 <SubmitButton type="submit">Submit</SubmitButton>
             </FormContainer>
             <BackButton type="button" onClick={handleBack}>

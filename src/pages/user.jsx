@@ -131,7 +131,7 @@ const User = () => {
   const [userData, setUserData] = useState({
     username: "",
 
-
+    password:"",
     profilePicture: "",
     favoriteGame:""
   });
@@ -154,7 +154,7 @@ const User = () => {
     favorite=User.favoriteGame
     console.log(user)
     console.log(favorite)
-    setUserData({username:user,favoriteGame:favorite});
+    setUserData({username:user,favoriteGame:favorite,password:User.password});
   }
   
  
@@ -197,7 +197,7 @@ const User = () => {
       email:selected.email,
       name:userData.username,
       favoriteGame:userData.favoriteGame,
-      password:selected.password,
+      password:userData.password,
       
     }
 
@@ -227,7 +227,7 @@ const User = () => {
     <Div>
     <Container>
       <Title>User Profile</Title>
-      <ProfilePictureContainer>
+      {/* <ProfilePictureContainer>
         <ProfilePicture
           src={
             userData.profilePicture ||
@@ -236,7 +236,7 @@ const User = () => {
           alt="Profile"
         />
         {isEditing && <Input type="file" accept="image/*" onChange={handleFileUpload} />}
-      </ProfilePictureContainer>
+      </ProfilePictureContainer> */}
       <form>
         <FormGroup>
           <Label>Username</Label>
@@ -274,6 +274,16 @@ const User = () => {
             type="text"
             name="favoriteGame"
             value={userData.favoriteGame}
+            onChange={handleInputChange}
+            disabled={!isEditing}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>Password</Label>
+          <Input
+            type="text"
+            name="password"
+            value={userData.password}
             onChange={handleInputChange}
             disabled={!isEditing}
           />
