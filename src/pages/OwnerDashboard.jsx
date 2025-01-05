@@ -368,6 +368,25 @@ const OwnerDashboard =() => {
 
   
   const remove=async(turf)=>{
+    console.log(turf)
+    let bookings=await axios.get("http://localhost:5236/api/Bookings");
+    let bookingdata=bookings.data;
+    let anybooking=bookingdata.some((booking)=>booking.date>=new Date().toISOString().split('T')[0] && turf.id===booking.turfid)
+    if(anybooking){
+      alert("You can't remove the turfs you have booking in upcoming dates.")
+      return
+    }
+    else{
+        await axios.delete(`http://localhost:5236/api/Turfs/DeleteTurf/${turf.id}`)
+    let response=await axios.get("http://localhost:5236/api/Turfs")
+    const data=response.data
+// console.log(response.data)
+    const filtered=data.filter((element)=>element.usermail===localStorage.getItem("loggedinowner"))
+// console.log(filtered)
+    ownerturfs=filtered;
+// console.log(ownerturfs)
+    setTurfs(filtered)
+    }
     // let response=await axios.get(API_URL)
     // let data=response.data
     // let selected=data.find((user)=>user.email===email)
@@ -379,15 +398,7 @@ const OwnerDashboard =() => {
     // let turfs=await axios.get(TURFS_URL)
     // let turfsdata=turfs.data
     // let selectedturf=turfsdata.find((tur)=>tur.name===turf.name &&tur.type===turf.type && tur.price===turf.price && tur.location===turf.location )
-    await axios.delete(`http://localhost:5236/api/Turfs/DeleteTurf/${turf.id}`)
-    let response=await axios.get("http://localhost:5236/api/Turfs")
-          const data=response.data
-    // console.log(response.data)
-          const filtered=data.filter((element)=>element.usermail===User.email)
-    // console.log(filtered)
-          ownerturfs=filtered;
-    // console.log(ownerturfs)
-          setTurfs(filtered)
+    
 
     
   }
