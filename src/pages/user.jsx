@@ -129,6 +129,8 @@ let filtered;
 // User Profile Component
 const User = () => {
   const {login,setLogin}=userConsumer()
+  const [error,setError]=useState(false)
+  const [errormsg,setErrormsg]=useState(null)
   const [loogedinuser,setLoggedinUser]=useState(localStorage.getItem("user"))
   const [userData, setUserData] = useState({
     username: "",
@@ -170,6 +172,7 @@ const User = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({ ...prevData, [name]: value }));
+    setError(false)
   };
   
 
@@ -186,20 +189,26 @@ const User = () => {
 
   const handleSave = async () => {
     const nametype = /^[a-zA-Z]+$/;
-    setIsEditing(false);
+    
     const response = await axios.get("http://localhost:5236/api/JusPlay");
     const data=response.data;
-    console.log(data)
+    // console.log(data)
     filtered=data.find((user)=>user.email===User.email)
 
-    console.log(User)
+    // console.log(User)
+    console.log(userData.password)
+    console.log(userData.username)
+    
     if(userData.password.length<5)
     {
-      alert("password can't be less than 5 characters")
+      
+      setError(true)
+      setErrormsg("Password can't be less than 5 characters.")
     }
-    else if(!nametype.test(userData.name))
+    else if(!nametype.test(userData.username))
     {
-      alert("Username should be in characters")
+      setError(true)
+      setErrormsg("Username should be in characters.")
     }
     else
     {
@@ -211,6 +220,7 @@ const User = () => {
         password:userData.password,
         
       }
+      setIsEditing(false);
   
       console.log(final)
   
@@ -308,6 +318,7 @@ const User = () => {
             disabled={!isEditing}
           />
         </FormGroup>
+        {error&&<p>{errormsg}</p>}
         {isEditing ? (
           <Button type="button" onClick={handleSave}>
             Save
