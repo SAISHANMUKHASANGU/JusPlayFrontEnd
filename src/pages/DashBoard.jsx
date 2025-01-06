@@ -210,23 +210,7 @@ const Dashboard =() => {
       <LogoutButton onClick={logout}>Logout</LogoutButton>
     </ResponsiveDiv>
         
-        {/* {nextBooking && (
-          <NextBooking>
-            <h2>Next Scheduled Booking</h2>
-            <p>{nextBooking.turfName}</p>
-            <p>{nextBooking.date} at {nextBooking.time}</p>
-          </NextBooking>
-        )} */}
-        {/* <RecentActivity>
-          <h2>Recent Activity</h2>
-          <ul>
-            {recentActivity.map((activity) => (
-              <li key={activity.id}>
-                {activity.turfName} - {activity.status}
-              </li>
-            ))}
-          </ul>
-        </RecentActivity> */}
+      
       </TopPanel>
 
       <Filters>
@@ -272,16 +256,7 @@ const Dashboard =() => {
       </Turfs>):<p></p>
       }
 
-      {/* <Promotions>
-        <h2>Promotions & Discounts</h2>
-        <ul>
-          {promotions.map((promo, index) => (
-            <li key={index}>
-              {promo.code}: {promo.discount}
-            </li>
-          ))}
-        </ul>
-      </Promotions> */}
+      
       {/* <RegisterButton onClick={RegisterTurf}>Register your turf</RegisterButton> */}
       {/* {registerturf ? <FormWrapper>
       <StyledForm onSubmit={Submit}>

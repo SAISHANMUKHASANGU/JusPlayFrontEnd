@@ -453,11 +453,11 @@ const gotobookings=()=>{
     <DashboardWrapper>
       <h1 style={{textAlign:'center',color:'white'}}>My Turfs</h1>
       {edit&&(<TurfCard>
-        <TurfDetail>turf Name:<input type="text" value={editableturf.name} disabled="true"/></TurfDetail>
-              <TurfDetail>turf Location:<input type="text" value={editableturf.location} disabled="true"/></TurfDetail>
-              <TurfDetail>price for session:<input type="number" name="price" value={editableturf.price} onChange={handlechange}/></TurfDetail>
-              <TurfDetail>Sport:<input type="text" value={editableturf.type} disabled="true" /></TurfDetail>
-              <Button onClick={UpdateTurf} >submit</Button>
+        <TurfDetail style={{fontSize:"20px"}}>Turf Name:<input type="text" style={{fontSize:"20px"}} value={editableturf.name} disabled="true"/></TurfDetail>
+              <TurfDetail style={{fontSize:"20px"}}>Turf Location:<input type="text" style={{fontSize:"20px"}} value={editableturf.location} disabled="true"/></TurfDetail>
+              <TurfDetail style={{fontSize:"20px"}}>Price for Session:<input type="number" style={{fontSize:"20px"}} name="price" value={editableturf.price} onChange={handlechange}/></TurfDetail>
+              <TurfDetail style={{fontSize:"20px"}}>Sport:<input type="text" value={editableturf.type} style={{fontSize:"20px"}} disabled="true" /></TurfDetail>
+              <Button onClick={UpdateTurf} >Save</Button>
 
               
       </TurfCard>
@@ -465,14 +465,14 @@ const gotobookings=()=>{
         
         {turfs?
         (turfs.map((turf)=>(<TurfCard>
-  <TurfDetail>Turf Name: {turf.name} </TurfDetail>
-  <TurfDetail>Turf Location: {turf.location} </TurfDetail>
-  <TurfDetail>Price for Session: {turf.price}</TurfDetail>
-  <TurfDetail>Sport: {turf.type}</TurfDetail>
+  <TurfDetail style={{fontSize:"20px"}}>Turf Name: {turf.name} </TurfDetail>
+  <TurfDetail style={{fontSize:"20px"}}>Turf Location: {turf.location} </TurfDetail>
+  <TurfDetail style={{fontSize:"20px"}}>Price for Session: {turf.price}</TurfDetail>
+  <TurfDetail style={{fontSize:"20px"}}>Sport: {turf.type}</TurfDetail>
   <div style={{display:"flex", alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
-  <Button onClick={()=>handleEdit(turf)} >Edit</Button>
+  {!edit&&<Button onClick={()=>handleEdit(turf)} >Edit</Button>}
   
-  <RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>
+  {!edit&&<RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>}
   </div>
   
 </TurfCard>))):<p>Loading....</p>}
@@ -621,8 +621,9 @@ const gotobookings=()=>{
         <Button type="submit">Submit</Button>
       </StyledForm>
       </FormWrapper>:""}
-      <div style={{display:"flex",justifyContent:"center"}}>
-      <Button onClick={logout}>logout</Button>
+      <div style={{display:"flex",alignItems:"center",flexDirection:"column"}}>
+      <Button  onClick={()=>logout()}>logout</Button>
+      {/* <RemoveButton onClick={() => Delete()}>delete</RemoveButton> */}
       </div>
       
     </DashboardWrapper>
@@ -947,7 +948,8 @@ const RemoveButton = styled.button`
   cursor: pointer;
   width:100px;
   transition: background-color 0.2s, transform 0.2s;
-  margin-bottom:10px;
+  margin:5px;
+  
   
 
   
