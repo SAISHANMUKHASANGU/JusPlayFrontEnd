@@ -720,18 +720,21 @@ const TurfsGrid = styled.div`
 `;
 
 const TurfCard = styled.div`
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color:rgba(24,182,218,0.1);
+  // border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
   display:flex;
   flex-direction:column;
+  backdrop-filter:blur(50px);
 
-  &:hover {
-    transform: scale(1.03);
-  }
+  // &:hover {
+  //   transform: scale(1.03);
+  //   // backdrop-filter:blur(0px);
+    
+  // }
 
   img {
     width: 100%;
@@ -931,6 +934,7 @@ const TurfDetail = styled.p`
   margin:5px;
   padding:5px;
   background-color:white;
+  backdrop-filter:blur(50px);
 `;
 
 const RemoveButton = styled.button`
@@ -943,6 +947,7 @@ const RemoveButton = styled.button`
   cursor: pointer;
   width:100px;
   transition: background-color 0.2s, transform 0.2s;
+  margin-bottom:10px;
   
 
   

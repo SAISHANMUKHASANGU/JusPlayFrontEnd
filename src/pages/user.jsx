@@ -24,9 +24,10 @@ const Container = styled.div`
   width: 600px;
   
   padding: 1.5rem;
-  background-color: #f8f9fa;
+  background-color: rgba(24,182,218,0.1);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  backdrop-filter:blur(50px);
    @media (max-width: 768px) {
     
     height: auto;

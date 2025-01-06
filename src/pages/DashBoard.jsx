@@ -252,7 +252,7 @@ const Dashboard =() => {
       </Filters>
 
       {submited?(<Turfs>
-        <h2>Available Turfs</h2>
+        <h2 >Available Turfs</h2>
         <br />
         <TurfsGrid>
           {filteredturfs.length>0?
@@ -269,7 +269,7 @@ const Dashboard =() => {
           <p>No available turfs</p>}
           
         </TurfsGrid>
-      </Turfs>):<p>Loading...</p>
+      </Turfs>):<p></p>
       }
 
       {/* <Promotions>
@@ -464,10 +464,10 @@ const Filters = styled.section`
 `;
 
 const Turfs = styled.section`
-  background-color: white;
+  // background-color: t;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
   
 `;
@@ -475,7 +475,7 @@ const Turfs = styled.section`
 const TurfsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  gap: 30px;
 
   @media (max-width: 768px) {
     gap: 15px;

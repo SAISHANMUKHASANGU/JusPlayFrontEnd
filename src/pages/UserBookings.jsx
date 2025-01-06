@@ -100,6 +100,7 @@ const BackButton = styled.button`
   
   &:hover {
     background-color: #5a6268;
+    cursor:pointer;
   }
 `
 
