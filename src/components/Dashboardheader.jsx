@@ -186,7 +186,7 @@ const UserHeader = () => {
       {/* Navigation Menu */}
       <NavMenu className={menuOpen ? "open" : ""}>
         <NavList>
-          <NavItem>
+          {/* <NavItem>
             <NavLinkStyled
               to="/"
               onClick={() => setMenuOpen(false) }
@@ -194,7 +194,7 @@ const UserHeader = () => {
             >
               Home
             </NavLinkStyled>
-          </NavItem>
+          </NavItem> */}
           
           <NavItem>
             <NavLinkStyled
