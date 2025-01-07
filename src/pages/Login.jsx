@@ -99,8 +99,34 @@ const SignInButton = styled.button`
   }
 `;
 
+const SelectField = styled.select`
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #333;
+        width: 100%;
+        background-color: #fff;
+        &:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+        @media (max-width: 768px) {
+    padding: 20px;
+    width: 90%;
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 10px;
+  }
+    `;
+
 
 const SignIn = () => {
+  const [usertype,setUsertype]=useState("User")
   const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
   const [loginData, setLoginData] = useState({
     email: '',
@@ -127,53 +153,112 @@ const SignIn = () => {
   const navigate=useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
-    try {
-      const response = await axios.get("http://localhost:5236/api/JusPlay");
-      console.log(response)
-      const users = response.data;
-
-      const user = users.find(
-        (user) => user.email === loginData.email && user.password === loginData.password
-      );
-      console.log(user)
-
-      if (user) {
-        
-
-        // await axios.put(`${API_URL}/${user.id}`, updatedUser);
-
-        setSuccess('Login successful!');
-        setError('');
-        navigate("/dashboard", {state:{email:user.email}})
-        setLogins(true)
-        setLogin("true")
-        
-        localStorage.setItem("user",user.email)
-
-        
-        
-        
-        
-      } else {
-        setError('Invalid email or password');
+    if(usertype==="User")
+    {
+      try {
+        const response = await axios.get("http://localhost:5236/api/JusPlay");
+        console.log(response)
+        const users = response.data;
+  
+        const user = users.find(
+          (user) => user.email === loginData.email && user.password === loginData.password
+        );
+        console.log(user)
+  
+        if (user) {
+          
+  
+          // await axios.put(`${API_URL}/${user.id}`, updatedUser);
+  
+          setSuccess('Login successful!');
+          setError('');
+          navigate("/dashboard", {state:{email:user.email}})
+          setLogins(true)
+          setLogin("true")
+          
+          localStorage.setItem("user",user.email)
+  
+          
+          
+          
+          
+        } else {
+          setError('Invalid email or password');
+          setSuccess('');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('An error occurred. Please try again later.');
         setSuccess('');
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setError('An error occurred. Please try again later.');
-      setSuccess('');
     }
+    else
+    {
+      try {
+        const response = await axios.get("http://localhost:5236/api/Owners");
+        const users = response.data;
+        console.log(users)
+  
+        let user = users.find(
+          (user) => user.email === loginData.email && user.password === loginData.password
+        );
+        
+  
+        if (user) {
+          const updatedUser = {
+            ...user,
+            lastLogin: new Date().toISOString() // Store the last login time
+          };
+  
+          // await axios.put(`${API_URL}/${user.id}`, updatedUser);
+  
+          setSuccess('Login successful!');
+          setError('');
+          setLogins(true)
+          setOwnerlogin("true")
+          navigate("/ownerdashboard")
+          localStorage.setItem("loggedinowner",user.email)
+          
+          
+          
+          
+          
+        } else {
+          setError('Invalid email or password');
+          setSuccess('');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('An error occurred. Please try again later.');
+        setSuccess('');
+      }
+    }
+    
+
+    
   };
+
 
   return (
     <Div>
     <SignInContainer>
-      <h2>Sign In</h2>
+
+      <h2>User Sign In</h2>
       <br />
       <form onSubmit={handleSubmit}>
+
         <FormGroup>
+        <SelectField
+                    name="shift"
+                    value={usertype}
+                    onChange={(e)=>setUsertype(e.target.value)}
+                        
+                    
+                >
+                    <option value="User">User</option>
+                    <option value="Owner">Owner</option>
+                    
+                </SelectField>
           <Label htmlFor="email">Email:</Label>
           <Input
             type="email"

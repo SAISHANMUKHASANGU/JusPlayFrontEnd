@@ -122,6 +122,14 @@ const BackButton = styled(Button)`
     background-color: #5a6268;
   }
 `;
+
+const DeleteButton = styled(Button)`
+  background-color:rgb(221, 10, 10);
+  margin-top: 1rem;
+  &:hover {
+    background-color:rgb(219, 16, 16);
+  }
+`;
 let selected;
 let user;
 let favorite;
@@ -152,7 +160,7 @@ const User = () => {
   const getdata=async()=>{
     let response =await axios.get("http://localhost:5236/api/JusPlay")
     let data=response.data
-    selected=data.find((user)=>user.email===loogedinuser)
+    selected=data.find((user)=>user.email===localStorage.getItem("user"))
     let User=selected
     console.log(User)
     user=User.name
@@ -300,7 +308,7 @@ const User = () => {
           />
         </FormGroup> */}
         <FormGroup>
-          <Label>favorite_game</Label>
+          <Label>Favorite Game</Label>
           <Input
             type="text"
             name="favoriteGame"
@@ -332,9 +340,9 @@ const User = () => {
         <BackButton type="button" onClick={handleBack}>
           Back to Dashboard
         </BackButton>
-        <BackButton type="button" onClick={handleDelete}>
+        {isEditing&&<DeleteButton type="button" onClick={handleDelete}>
           Delete
-        </BackButton>
+        </DeleteButton>}
       </form>
     </Container>
     </Div>

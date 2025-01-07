@@ -19,6 +19,7 @@ let ownerturfs;
 
 
 const OwnerDashboard =() => {
+    let price_filter=[]
     const [selected,setSelected]=useState("")
     const [edit,setEdit]=useState(false)
 
@@ -102,7 +103,6 @@ const OwnerDashboard =() => {
 
 
   
-  
   const [Username,setUsername]=useState(null);
   const [nextBooking, setNextBooking] = useState(null);
   const [recentActivity, setRecentActivity] = useState([]);
@@ -111,7 +111,7 @@ const OwnerDashboard =() => {
   const [promotions, setPromotions] = useState([]);
   const [filteredturfs,setFilteredTurfs]=useState([]);
   const [registerturf,setRegisterTurf]=useState(false)
-  const [turfs,setTurfs]=useState(null)
+  const [turfs,setTurfs]=useState([])
   const [id,setID]=useState()
   const {login,setLogin,ownerlogin,setOwnerlogin}=userConsumer()
   
@@ -137,59 +137,17 @@ const OwnerDashboard =() => {
     usermail:""
   })
   const [newprice,setNewPrice]=useState("")
-  // console.log("turfs");
-  // console.log(turfs)
-  
 
-  // useEffect(()=>getdata(),[])
   useEffect(() => {
     getdata()
-    // Simulating data fetching
-    
-
-    
-
-
-    // useLocation()
-  
-
-    
-
-    
+   
   },[turfs]);
 
-
-  
-
-  // const apifetch=async ()=>
-  // {
-  //   try {
-  //     const response = await axios.get("http://localhost:5236/api/Owners");
-  //     const users = response.data;
-  //     console.log(users)
-
-  //     const user = users.find(
-  //       (user) => user.email ===useremail 
-  //     );
-      
-
-  //     // console.log(user)
-  //     // User=user
-  //     // username=user.name
-  //     // setUsername(user.name)
-  //     // console.log(Username)
-  //     // console.log(username)
-  //     // console.log(User)
+  useEffect(()=>{
+    getdata()
+  },[])
 
 
-      
-
-      
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-      
-  //   }
-  // }
 
 
 
@@ -203,14 +161,11 @@ const OwnerDashboard =() => {
 
   
 
-  // const logout=async ()=>{
-  //   let data=JSON.parse(localStorage.getItem('logins'))
-  //   const filtered=data.filter((user)=>user.email!==useremail)
-  //   console.log(filtered)
-  // }
+ 
   const logout=async ()=>{
     navigate("/ownerlogin")
     setOwnerlogin("false")
+    localStorage.removeItem("loggedinowner")
     
 
     
@@ -246,6 +201,7 @@ const OwnerDashboard =() => {
   }
 
   const handleInputChange = (e) => {
+    setError("")
     const { name, value } = e.target;
     setNewturf((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -261,42 +217,28 @@ const OwnerDashboard =() => {
       let response=await axios.get("http://localhost:5236/api/Turfs")
       
       let resdata=response.data
-      console.log(resdata)
-      let filtered=resdata.filter((turf)=>turf.name.toLowerCase()===newTurf.name.toLowerCase())
-      if(filtered.length>0)
-      {
-        let errormessage="Turf already exists"
-        setError({name:errormessage})
-        return
-      }
-      if(newTurf.name==="")
+      
+      let filtered=resdata.filter((turf)=>turf.name.toLowerCase()===newTurf.name.toLowerCase() && turf.location.toLowerCase().trim()===newTurf.location.toLowerCase().trim() && turf.type===newTurf.type)
+      filtered.map((turf)=>price_filter.push(turf.price.toString()))
+      console.log(price_filter)
+      console.log(typeof(newTurf.price))
+      if(newTurf.name.trim()==="")
       {
         let errormessage="Turf name can't be empty"
         setError({name:errormessage})
         return
       }
-      if(newTurf.type==="")
-      {
-        let errormessage="Sport can't be empty"
-        setError({type:errormessage})
-        return
-      }
-      if(newTurf.type!="Cricket"&& newTurf.type!="Football"&&newTurf.type!="Badminton")
-      {
-        console.log(newTurf.type)
-        let errormessage="Sport can be only Cricket or Football or Badminton"
-        setError({type:errormessage})
-        return
-      }
+      
+      
       if(newTurf.price==="")
       {
         let errormessage="price can't empty"
         setError({price:errormessage})
         return
       }
-      if(newTurf.price<100 && newTurf.price>=0)
+      if(newTurf.price<1000 && newTurf.price>=0)
         {
-          let errormessage="price can't be less than 100"
+          let errormessage="price can't be less than 1000"
           setError({price:errormessage})
           return
         }
@@ -306,12 +248,19 @@ const OwnerDashboard =() => {
             setError({price:errormessage})
             return
         }
+      if(newTurf.price.includes(price_filter))
+      {
+        
+        alert("Turf with same Name, Location and Price already exists")
+        return
+      }
       if(newTurf.location==="")
       {
         let errormessage="Location can't be empty"
-          setError({location:errormessage})
-          return
+            setError({location:errormessage})
+            return
       }
+      
       else{
         
         
@@ -346,6 +295,7 @@ const OwnerDashboard =() => {
   
   
   const Submit=async(event)=>{
+    
     event.preventDefault()
     
     validation()
@@ -373,21 +323,27 @@ const OwnerDashboard =() => {
     let bookings=await axios.get("http://localhost:5236/api/Bookings");
     let bookingdata=bookings.data;
     let anybooking=bookingdata.some((booking)=>booking.date>=new Date().toISOString().split('T')[0] && turf.id===booking.turfid)
-    if(anybooking){
-      alert("You can't remove the turfs you have booking in upcoming dates.")
-      return
+    const userresponse=confirm("Do you want to delete Turf?")
+    if(userresponse)
+    {
+      if(anybooking){
+        alert("You can't remove the turfs you have booking in upcoming dates.")
+        return
+      }
+      else{
+          await axios.delete(`http://localhost:5236/api/Turfs/DeleteTurf/${turf.id}`)
+      let response=await axios.get("http://localhost:5236/api/Turfs")
+      const data=response.data
+  // console.log(response.data)
+      const filtered=data.filter((element)=>element.usermail===localStorage.getItem("loggedinowner"))
+  // console.log(filtered)
+      ownerturfs=filtered;
+  // console.log(ownerturfs)
+      setTurfs(filtered)
+      }
+
     }
-    else{
-        await axios.delete(`http://localhost:5236/api/Turfs/DeleteTurf/${turf.id}`)
-    let response=await axios.get("http://localhost:5236/api/Turfs")
-    const data=response.data
-// console.log(response.data)
-    const filtered=data.filter((element)=>element.usermail===localStorage.getItem("loggedinowner"))
-// console.log(filtered)
-    ownerturfs=filtered;
-// console.log(ownerturfs)
-    setTurfs(filtered)
-    }
+    
     // let response=await axios.get(API_URL)
     // let data=response.data
     // let selected=data.find((user)=>user.email===email)
@@ -444,6 +400,28 @@ const gotobookings=()=>{
   navigate("/checkingbookings")
 }
 
+const Delete=async()=>{
+  const userresponse=confirm("Do you want to delete the owner?")
+  if(userresponse)
+  {
+    if(turfs.length>0)
+      {
+        alert("You can't delete the your profile because you have turfs registered to your name")
+      }
+      else{
+        let response=await axios.get("http://localhost:5236/api/Owners")
+        let data=response.data
+        let selected=data.find((owner)=>owner.email===localStorage.getItem("loggedinowner"))
+        console.log(selected)
+        await axios.delete(`http://localhost:5236/api/Owners/DeleteOwner/${selected.id}`)
+        navigate("/ownerlogin")
+        setOwnerlogin(false)
+      }
+
+  }
+
+  
+}
   
 
   return (
@@ -463,19 +441,19 @@ const gotobookings=()=>{
       </TurfCard>
         )}
         
-        {turfs?
+        {turfs.length>0?
         (turfs.map((turf)=>(<TurfCard>
-  <TurfDetail style={{fontSize:"20px"}}>Turf Name: {turf.name} </TurfDetail>
-  <TurfDetail style={{fontSize:"20px"}}>Turf Location: {turf.location} </TurfDetail>
-  <TurfDetail style={{fontSize:"20px"}}>Price for Session: {turf.price}</TurfDetail>
-  <TurfDetail style={{fontSize:"20px"}}>Sport: {turf.type}</TurfDetail>
-  <div style={{display:"flex", alignItems:"center",justifyContent:"center",flexDirection:"column"}}>
+  <TurfDetail style={{fontSize:"15px"}}>Turf Name: {turf.name} </TurfDetail>
+  <TurfDetail style={{fontSize:"15px"}}>Turf Location: {turf.location} </TurfDetail>
+  <TurfDetail style={{fontSize:"15px"}}>Price for Session: {turf.price}</TurfDetail>
+  <TurfDetail style={{fontSize:"15px"}}>Sport: {turf.type}</TurfDetail>
+  <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
   {!edit&&<Button onClick={()=>handleEdit(turf)} >Edit</Button>}
   
   {!edit&&<RemoveButton onClick={() => remove(turf)}>Remove</RemoveButton>}
   </div>
   
-</TurfCard>))):<p>Loading....</p>}
+</TurfCard>))):<p style={{color:"white",textAlign:"center"}}>No Turfs</p>}
       {/* <TopPanel>
         <h1>Hey {username}! Welcome Back To JusPlay.</h1>
         
@@ -572,12 +550,11 @@ const gotobookings=()=>{
       
           </div>
         )}
-        <select name="type" value={newTurf.type} onChange={handleInputChange}>
-            
-            <option value="Cricket" defaultChecked>Cricket</option>
-            <option value="Football">Football</option>
-            <option value="Badminton">Badminton</option>
-        </select>
+        <StyledSelect name="type" value={newTurf.type} onChange={handleInputChange}>
+      <StyledOption value="Cricket">Cricket</StyledOption>
+      <StyledOption value="Football">Football</StyledOption>
+      <StyledOption value="Badminton">Badminton</StyledOption>
+    </StyledSelect>
         {/* <Input
           type="text"
           name="type"
@@ -622,8 +599,8 @@ const gotobookings=()=>{
       </StyledForm>
       </FormWrapper>:""}
       <div style={{display:"flex",alignItems:"center",flexDirection:"column"}}>
-      <Button  onClick={()=>logout()}>logout</Button>
-      {/* <RemoveButton onClick={() => Delete()}>delete</RemoveButton> */}
+      <Button  onClick={()=>logout()}>Logout</Button>
+      <RemoveButton onClick={() => Delete()}>Delete</RemoveButton>
       </div>
       
     </DashboardWrapper>
@@ -781,7 +758,7 @@ const FormWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f7f9fc;
+  
 `;
 
 const StyledForm = styled.form`
@@ -796,10 +773,10 @@ const StyledForm = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.75rem;
+  padding: 8px;
   border: 1px solid #dcdcdc;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 13px;
   outline: none;
   transition: border-color 0.3s;
 
@@ -962,4 +939,37 @@ const Div=styled.div`
   background-image: url("https://images.squarespace-cdn.com/content/v1/65899401195ba416670c0913/cc555d6e-7ffa-4817-abea-c0cbacfbb9f5/DALL%C2%B7E+2024-05-14+12.43.52+-+A+vibrant+banner+showcasing+a+dynamic+clash+between+cricket+and+badminton.+On+the+left+side%2C+draw+a+cricket+player+in+action%2C+mid-swing+with+a+bat%2C+we.jpeg?format=1500w");
   background-size: cover;
   background-repeat: no-repeat;
-`
+`;
+
+const StyledSelect = styled.select`
+  width: 100%;
+  padding: 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  }
+
+  &:hover {
+    border-color: #0056b3;
+  }
+`;
+
+const StyledOption = styled.option`
+  background-color: #f8f9fa;
+  color: #333;
+ 
+
+  &:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+`;

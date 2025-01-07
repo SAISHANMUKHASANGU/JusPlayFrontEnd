@@ -7,6 +7,7 @@ import emailjs from '@emailjs/browser';
 
 let user;
 function Book() {
+    const placeholder = 'yyyy-mm-dd'; 
     const [error,setError]=useState(false)
     const [errormessage,setErrormessage]=useState("")
     const location = useLocation();
@@ -25,6 +26,9 @@ function Book() {
             let data=response.data;
             let selected=data.find((user)=>user.email===localStorage.getItem("user"))
             user=selected;
+            console.log(new Date(new Date().setDate(new Date().getDate())))
+            console.log(new Date(new Date().setDate(new Date().getDate() + 3)))
+
         }
         fetchdata()
     },[])
@@ -36,7 +40,7 @@ function Book() {
         price: turf.price,
         location: turf.location,
         type: turf.type,
-        shift: "Morning",
+        shift: "Morning (08:00AM to 11:00AM)",
         date: "",
         mail: localStorage.getItem("user"), // Dynamic user email
     });
@@ -69,6 +73,7 @@ function Book() {
                 `Slot booked at ${filters.name} for playing ${filters.type} at ${filters.shift}`
             );
             await axios.post("http://localhost:5236/api/Bookings/AddBooking",filters)
+            sendConfirmationEmail();
         }
 
         // await axios.put(`${TURFS_URL}/${turf.id}`, selected);
@@ -79,7 +84,7 @@ function Book() {
         // selectedUser.bookings.push(filters);
         // await axios.put(`${API_URL}/${selectedUser.id}`, selectedUser);
 
-        sendConfirmationEmail();
+        
         }
     }
 
@@ -93,8 +98,11 @@ function Book() {
         validate()
         
     };
-
-    const sendConfirmationEmail = () => {
+    const placeholder1="Date"
+    const sendConfirmationEmail = async() => {
+        let response=await axios.get("http://localhost:5236/api/Turfs")
+        let data=response.data
+        let selected=data.find((turf)=>turf.name===filters.name)
         const templateParams = {
             user_name: user.name,
             user_email: user.email,
@@ -103,6 +111,7 @@ function Book() {
             shift: filters.shift,
             date: filters.date,
             price: filters.price,
+            ownermail:selected.usermail
         };
 
         emailjs
@@ -330,7 +339,10 @@ function Book() {
                     max={new Date(new Date().setDate(new Date().getDate() + 3))
                         .toISOString()
                         .split('T')[0]}
+
+                    
                 />
+                 
                 {error&&<p>{errormessage}</p>}
                 </div>
                 <div><p style={{textAlign:"left"}}>Shift:</p>
@@ -341,9 +353,9 @@ function Book() {
                         setFilters((prevdata) => ({ ...prevdata, shift: e.target.value }))
                     }
                 >
-                    <option value="Morning">Morning</option>
-                    <option value="Afternoon">Afternoon</option>
-                    <option value="Evening">Evening</option>
+                    <option value="Morning (08:00AM to 11:00AM)">Morning (08:00AM to 11:00AM)</option>
+                    <option value="Afternoon (02:00PM to 5:00PM)">Afternoon (02:00PM to 5:00PM)</option>
+                    <option value="Evening (07:00PM to 11:00PM)">Evening (07:00PM to 11:00PM)</option>
                 </SelectField>
                 </div>
                 <SubmitButton type="submit">Submit</SubmitButton>

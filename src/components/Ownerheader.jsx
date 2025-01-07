@@ -134,7 +134,7 @@ export const LogoutButton = styled.button`
   }
 `;
 
-const UserHeader = () => {
+const OwnerHeader = () => {
   const {login,setLogin}=userConsumer()
   const navigate=useNavigate()
   // const logout=async ()=>{
@@ -196,87 +196,16 @@ const UserHeader = () => {
             </NavLinkStyled>
           </NavItem> */}
           
-          <NavItem>
-            <NavLinkStyled
-              to="/products"
-              onClick={() => setMenuOpen(false) }
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Products
-            </NavLinkStyled>
-          </NavItem>
-          
-          {/* <NavItem>
-            <NavLinkStyled
-              to="/features"
-              onClick={() => setMenuOpen(false) }
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Features
-            </NavLinkStyled>
-          </NavItem> */}
-          <NavItem>
-            <NavLinkStyled
-              to="/user"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              UserProfile
-            </NavLinkStyled>
-          </NavItem>
-          <NavItem>
-            <NavLinkStyled
-              to="/dashboard"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Dashboard
-            </NavLinkStyled>
-          </NavItem>
           
           <NavItem>
             <NavLinkStyled
-              to="/bookings"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Bookings
-            </NavLinkStyled>
-          </NavItem>
-          {/* <NavItem>
-            <NavLinkStyled
-              to="/owner"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              OwnerSignup
-            </NavLinkStyled>
-          </NavItem>
-          <NavItem>
-            <NavLinkStyled
-              to="/ownerlogin"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              OwnerLogin
-            </NavLinkStyled>
-          </NavItem> */}
-         {localStorage.getItem("loggedinowner")===null? <NavItem>
-            <NavLinkStyled
-              to="/Login"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? "active-link" : "")}
-            >
-              Login
-            </NavLinkStyled>
-          </NavItem>: <NavItem><NavLinkStyled
               to="/ownerdashboard"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) => (isActive ? "active-link" : "")}
             >
-              Owner Dashboard
+              OwnerDashboard
             </NavLinkStyled>
-          </NavItem>}
+          </NavItem>
           
           
         </NavList>
@@ -285,4 +214,4 @@ const UserHeader = () => {
   );
 };
 
-export default UserHeader;
+export default OwnerHeader;

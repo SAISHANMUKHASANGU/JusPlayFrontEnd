@@ -126,6 +126,7 @@ function Owner() {
       username:null,
       password:null
     })
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [visibility,setVisibility]=useState(false)
     const [users,setUsers]=useState([])
     const [newuser,setNewUser]=useState({
@@ -207,6 +208,16 @@ function Owner() {
             
             await setError({ password: errormessage })
             return
+          }
+
+          if (confirmPassword === "") {
+            setError({ confirmPassword: "Confirm Password can't be Empty" });
+            return;
+          }
+      
+          if (newuser.password !== confirmPassword) {
+            setError({ confirmPassword: "Passwords do not match" });
+            return;
           }
       else if(newuser.name==="")
       {
@@ -323,6 +334,19 @@ function Owner() {
               
                   </div>
                 )}
+                <InputGroup>
+            <Label htmlFor="confirmPassword">Confirm Password:</Label>
+            <Input
+              type={visibility ? "text" : "password"}
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+            />
+          </InputGroup>
+          {error.confirmPassword && (
+            <ErrorMessage>{error.confirmPassword}</ErrorMessage>
+          )}
                 </Fieldset>
                 <Fieldset>
                   <Legend>Personal Info:</Legend>

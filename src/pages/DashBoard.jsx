@@ -118,11 +118,7 @@ const Dashboard =() => {
 
   
 
-  // const logout=async ()=>{
-  //   let data=JSON.parse(localStorage.getItem('logins'))
-  //   const filtered=data.filter((user)=>user.email!==useremail)
-  //   console.log(filtered)
-  // }
+
   const logout=async ()=>{
     navigate("/Login")
     setLogin("false")
@@ -166,7 +162,7 @@ const Dashboard =() => {
       console.log(availableTurfs)
       console.log(filters.location)
       console.log(filters.type)
-      let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.toLowerCase()===filters.location.toLowerCase())
+      let filteredturf= data.filter((turf)=>turf.type===filters.type  && turf.location.trim().toLowerCase().replace(/\s+/g, '').includes(filters.location.trim().toLowerCase().replace(/\s+/g, '')))
       console.log(filteredturf)
       setFilteredTurfs(filteredturf)
       setSubmited(true)
@@ -202,7 +198,7 @@ const Dashboard =() => {
     <Div>
     <DashboardWrapper>
       <TopPanel>
-        <h1>Hey {username}! Welcome Back To JusPlay.</h1>
+        <h1>Hey {Username}! Welcome Back To JusPlay.</h1>
         
       <ResponsiveDiv>
       {/* <ProfileButton onClick={goto}>Profile</ProfileButton>
@@ -214,8 +210,9 @@ const Dashboard =() => {
       </TopPanel>
 
       <Filters>
-        <h2>Filters</h2>
-        <label>
+        <h2>Turf Finder</h2>
+        <br />
+        <label style={{fontSize:"20px"}}>
           Location:
           <input type="text" name="location" value={filters.location} onChange={handleFilterChange} />
         </label>
@@ -223,8 +220,8 @@ const Dashboard =() => {
         {error&&<p style={{color:"red"}}>{errormessage}</p>}
         <br />
         
-        <label>
-          Turf Type:
+        <label style={{fontSize:"20px"}}>
+          Sport:
           <select name="type" value={filters.type} onChange={handleFilterChange}>
             
             <option value="Cricket" defaultChecked>Cricket</option>
@@ -251,72 +248,15 @@ const Dashboard =() => {
             </TurfCard>
           ))):
           <p>No available turfs</p>}
+
+          
           
         </TurfsGrid>
       </Turfs>):<p></p>
       }
 
       
-      {/* <RegisterButton onClick={RegisterTurf}>Register your turf</RegisterButton> */}
-      {/* {registerturf ? <FormWrapper>
-      <StyledForm onSubmit={Submit}>
-        <Heading>Add Turf Details</Heading>
-        <Input
-          type="text"
-          name="name"
-          value={newTurf.name}
-          placeholder="Turf Name"
-          onChange={handleInputChange}
-        />
-        {error.name && (<div>
-              
-              <span>{error.name}</span>
       
-          </div>
-        )}
-        <Input
-          type="text"
-          name="type"
-          value={newTurf.type}
-          placeholder="Sport"
-          onChange={handleInputChange}
-        />
-        {error.type && (<div>
-              
-              <span>{error.type}</span>
-      
-          </div>
-        )}
-        <Input
-          type="number"
-          name="price"
-          value={newTurf.price}
-          placeholder="Price per slot"
-          onChange={handleInputChange}
-          
-        />
-        {error.price && (<div>
-              
-              <span>{error.price}</span>
-      
-          </div>
-        )}
-        <Input
-          type="text"
-          name="location"
-          value={newTurf.location}
-          placeholder="Location"
-          onChange={handleInputChange}
-        />
-        {error.location && (<div>
-              
-              <span>{error.location}</span>
-      
-          </div>
-        )}
-        <Button type="submit">Submit</Button>
-      </StyledForm>
-      </FormWrapper>:""} */}
     </DashboardWrapper>
     </Div>
   );
@@ -324,7 +264,7 @@ const Dashboard =() => {
 
 export default Dashboard;
 
-// Styled Components
+
 
 const DashboardWrapper = styled.div`
   padding: 20px;
